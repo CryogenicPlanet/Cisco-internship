@@ -1,0 +1,116 @@
+<html>
+<head>
+<title>
+QuickBooks
+</title>
+<link rel = "stylesheet"
+        href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+     <link rel = "stylesheet"
+        href = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+     <script type = "text/javascript" src = "https://code.jquery.com/jquery-2.1.1.min.js">
+     </script>
+     <script src = "https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js">
+     </script>
+</head>
+<body style="background: url('/Users/Kumar/Downloads/BookWallpaper.jpeg') no-repeat center center fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;">
+
+  <style >
+
+    p{
+      font-family: Chalkduster;
+      color : #f48fb1;
+    }
+
+    h4{
+      font-family: berkshire swash ;
+      color : white;
+      }
+      button{
+        color: black;
+        font-family: courier new;
+        top:3px;
+        position:relative;
+        box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #31524d, 0px 5px 3px #999;
+      }
+
+
+    html {
+        height: 100%
+       }
+
+
+    body {
+      background-image: url("/Users/Kumar/Downloads/BookWallpaper.jpeg");
+      background-repeat:no-repeat;
+      background-size: cover;
+        }
+
+        .loginDiv{
+          border: 1px solid #a1a3a3;
+          border-radius: 400px;
+          box-sizing: border-box;
+        }
+
+.loginNameDiv{
+  border: 1px solid #a1a3a3;
+  border-radius: 4px;
+  box-shadow: 0 1px #fff;
+  box-sizing: border-box;
+  color: black;
+  height: 39px;
+  margin: 31px 0 0 29px;
+  padding-left: 37px;
+  transition: box-shadow 0.3s;
+  width: 240px;
+}
+.passwordDiv{
+  border: 1px solid #a1a3a3;
+  border-radius: 4px;
+  box-shadow: 0 1px #fff;
+  box-sizing: border-box;
+  color: black;
+  height: 39px;
+  margin: 31px 0 0 29px;
+  padding-left: 37px;
+  transition: box-shadow 0.3s;
+  width: 240px;
+}
+  </style>
+  <!--panel-->
+<div class = "card-panel cyan lighten-2">
+  <!--heading-->
+  <div  style = "text-align : right; font-size:36px;margin:0px;display:inline-block;">
+    QuickBooks
+  </div>
+</div>
+<!--login-->
+<div class="parentDiv" >
+    <div class="loginDiv">
+        <div class="loginNameDiv">
+         <input type="text" name="login" placeholder="Username";required/>
+        </div>
+
+        <div class="passwordDiv">
+         <input type="password" name="password" placeholder="Password" required/>
+        </div>
+    </div>
+    <!--Submiting login details-->
+    <button type="submit">Login</button>
+</div>
+
+<!--text stuff-->
+<p>
+  A mystical place of great magical powers.
+<br>
+  Borrow books from a community of bibliophiles to live a hundred lives!!
+</p>
+<!--background-->
+<div class="parallax-container">
+     <div class="parallax"><img src="/Users/Kumar/Downloads/BookWallpaper.jpeg"></div>
+</div>
+
+</body>
+</html>
