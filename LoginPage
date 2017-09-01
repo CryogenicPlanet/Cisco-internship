@@ -54,11 +54,8 @@ QuickBooks
           box-sizing: border-box;
         }
 
-.loginNameDiv{
-  border: 1px solid #a1a3a3;
-  border-radius: 4px;
-  box-shadow: 0 1px #fff;
-  box-sizing: border-box;
+        .loginNameDiv{
+
   color: black;
   height: 39px;
   margin: 31px 0 0 29px;
@@ -66,11 +63,8 @@ QuickBooks
   transition: box-shadow 0.3s;
   width: 240px;
 }
-.passwordDiv{
-  border: 1px solid #a1a3a3;
-  border-radius: 4px;
-  box-shadow: 0 1px #fff;
-  box-sizing: border-box;
+        .loginEmailDiv{
+
   color: black;
   height: 39px;
   margin: 31px 0 0 29px;
@@ -78,6 +72,27 @@ QuickBooks
   transition: box-shadow 0.3s;
   width: 240px;
 }
+      .passwordDiv{
+
+        color: black;
+        height: 39px;
+        margin: 31px 0 0 29px;
+        padding-left: 37px;
+        transition: box-shadow 0.3s;
+        width: 240px;
+}
+.confirmPasswordDiv{
+
+      color: black;
+      height: 39px;
+      margin: 31px 0 0 29px;
+      padding-left: 37px;
+      transition: box-shadow 0.3s;
+      width: 240px;
+}
+
+
+
   </style>
   <!--panel-->
 <div class = "card-panel cyan lighten-2">
@@ -90,11 +105,16 @@ QuickBooks
 <div class="parentDiv" >
     <div class="loginDiv">
         <div class="loginNameDiv">
-         <input type="text" name="login" placeholder="Username";required/>
+         <input type="name" name="login" placeholder="Username";required/>
         </div>
-
+        <div class="loginEmailDiv">
+         <input type="emial" name= "login" placeholder="Email";required/>
+        </div>
         <div class="passwordDiv">
          <input type="password" name="password" placeholder="Password" required/>
+        </div>
+        <div class="confirmPasswordDiv">
+         <input type="password" name="password" placeholder="Confirm Password" required/>
         </div>
     </div>
     <!--Submiting login details-->
