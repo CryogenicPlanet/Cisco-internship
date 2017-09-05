@@ -52,7 +52,7 @@
   // Javascript and Jquery Code Goes Here
   
   // Ajax Post Here
-    // Post to Url 
+    // Post to Url Login.jsp
     
   
   // Intialisation
