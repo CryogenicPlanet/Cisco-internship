@@ -26,6 +26,7 @@
           <ul class="right hide-on-med-and-down">
             <li><div class="row">
            
+
               <div class="row">
                 <div class="input-field col s5 cyan">
                   <input placeholder="Username" id="user_name" type="text" class="validate" required>
@@ -36,7 +37,8 @@
                   <label for="password">Password</label>
                 </div>
                 </li>
-            <li><a href="" class="waves-effect waves-teal btn-flat">Login</a></li>
+
+            <li><a href="Javascript:SendToDb();"  class="waves-effect waves-teal btn-large">Login!</a></li>
           </ul>
           <ul class="side-nav" id="mobile-demo">
             <li><a href="sass.html">Sass</a></li>
@@ -46,15 +48,33 @@
           </ul>
         </div>
   </nav>
+
   <!-- End of Nav Bar-->
   <script>
-  
+ var user_name = document.getElementById('user_name').value;
+ var password= document.getElementById('password').value;
+
   // Javascript and Jquery Code Goes Here
-  
+
   // Ajax Post Here
-    // Post to Url 
-    
-  
+    // Post to Url
+    function SendToDb(){
+      $.ajax({
+        type : "Post",
+        url : "https://cisco-internship-cryogenicplanet.c9users.io/test.php",
+        datatype : "json",
+        data : {
+          u_name: user_name,
+          pword: password,
+        },
+        success: function(data)
+                    {
+                       Materialize.toast(data, 3000) // 3000 is the duration of the toast
+
+                    }
+      });
+    }
+
   // Intialisation
           $(".button-collapse").sideNav();
   </script>
