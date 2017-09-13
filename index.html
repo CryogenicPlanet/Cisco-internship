@@ -52,14 +52,16 @@
   </nav>
   <!-- End of Nav Bar-->
   <script>
- var user_name = document.getElementById('user_name').value;
- var password= document.getElementById('password').value;
 
   // Javascript and Jquery Code Goes Here
 
   // Ajax Post Here
     // Post to Url
     function SendToDb(){
+      var user_name = document.getElementById('user_name').value;
+      var password = document.getElementById('password').value;
+     console.log(user_name);
+     console.log(password);
       $.ajax({
         type : "Post",
         url : "https://cisco-internship-cryogenicplanet.c9users.io/test.php",
