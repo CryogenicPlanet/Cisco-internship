@@ -29,8 +29,8 @@
 
               <div class="row">
                 <div class="input-field col s5 cyan">
-                  <input placeholder="Username" id="user_name" type="text" class="validate" required>
-                  <label for="user_name">Username</label>
+                  <input placeholder="Email" id="email" type="email" class="validate" required>
+                  <label for="email">Email</label>
                 </div>
                 <div class="input-field col s5 offset-s1 cyan">
                   <input id="password" type="password" class="validate" required>
@@ -58,16 +58,18 @@
   // Ajax Post Here
     // Post to Url
     function SendToDb(){
-      var user_name = document.getElementById('user_name').value;
-      var password = document.getElementById('password').value;
-     console.log(user_name);
-     console.log(password);
+       var email = document.getElementById('email').value;
+       var password = document.getElementById('password').value;
+
+      console.log(email);
+      console.log(password);
+
       $.ajax({
         type : "Post",
-        url : "https://cisco-internship-cryogenicplanet.c9users.io/test.php",
+        url : "https://cisco-backend-cryogenicplanet.c9users.io/login",
         datatype : "json",
         data : {
-          u_name: user_name,
+          email: email,
           pword: password,
         },
         success: function(data)
