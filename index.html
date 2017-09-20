@@ -108,8 +108,10 @@
   cache: true,
   success: function(data){     
   console.log(data)
-  if (data){
-      Materialize.toast(data.message, 4000);
+ if (!data.status){
+      Materialize.toast('<p class="flow-text red-text">' +data.message + '</p>', 4000);
+    } else {
+       Materialize.toast('<p class="flow-text white-text">' +data.message+ '</p>', 2000);
     }
   }
         });
