@@ -10,7 +10,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-    <body style="background: url('https://static.pexels.com/photos/159788/cup-of-tea-book-table-reading-159788.jpeg') no-repeat center center fixed;
+    <body style="background: url('https://images8.alphacoders.com/476/thumb-1920-476792.jpg') no-repeat center center fixed;
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
@@ -19,19 +19,23 @@
       <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
       <script type="text/javascript" src="js/materialize.min.js"></script>
       <!-- Nav Bar -->
-      <nav>
-        <div class="nav-wrapper cyan darken-2">
-          <a href="#" class="brand-logo">QuickBooks</a>
+      <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Berkshire+Swash">
+
+        <nav>
+
+        <div class="nav-wrapper #03a9f4 light-blue">
+        <a href="#" class="brand-logo"><div class="row"><div class="col s1"><div style="font-family: 'Berkshire Swash', cursive;">Quickbooks</div></div></div></p></a>
           <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
           <ul class="right hide-on-med-and-down">
             <li><div class="row">
 
               <div class="row">
-                <div class="input-field col s5 cyan">
+                <div class="input-field col #03a9f4 light-blue ">
                   <input placeholder="Username" id="user_name" type="text" class="validate" required>
                   <label for="user_name">Username</label>
                 </div>
-                <div class="input-field col s5 offset-s1 cyan">
+                <div class="input-field col #03a9f4 light-blue">
                   <input id="password" type="password" class="validate" required>
                   <label for="password">Password</label>
                 </div>
@@ -45,15 +49,16 @@
             <li><a href="mobile.html">Mobile</a></li>
 
           </ul>
-          <a href="javascript:red();" class="waves-effect waves-light btn">button</a>
+<!--
+ <a href="javascript:red();" class="waves-effect waves-light btn">button</a> -->
         </div>
   </nav>
 
   <!-- End of Nav Bar-->
-  <script>
+<!--  <script>
 
   // Javascript and Jquery Code Goes Here
-  function red(){$.ajax({ type:"Post", url: "https://cisco-internship-cryogenicplanet.c9users.io/test.php", datatype: "JSON", data:{temp:"12345"}, success :function(data)
+ function red(){$.ajax({ type:"Post", url: "https://cisco-internship-cryogenicplanet.c9users.io/test.php", datatype: "JSON", data:{temp:"12345"}, success :function(data)
 {
 
   Materialize.toast(data, 4000)} });
@@ -64,8 +69,8 @@
     // Post to Url
 
 
-  // Intialisation
-          $(".button-collapse").sideNav();
-  </script>
+  //Intialisation
+         $(".button-collapse").sideNav();
+  </script> -->
     </body>
   </html>
