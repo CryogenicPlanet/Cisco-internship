@@ -74,7 +74,10 @@
         },
         success: function(data)
                     {
-                       Materialize.toast(data, 3000) // 3000 is the duration of the toast
+                      if (!data.status){
+                        Materialize.toast(data.message, 4000) // 4000 is the duration of the toast
+
+                      }
 
                     }
       });
