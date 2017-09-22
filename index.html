@@ -109,9 +109,10 @@
   success: function(data){     
   console.log(data)
  if (!data.status){
-      Materialize.toast('<p class="flow-text red-text">' +data.message + '</p>', 4000);
+      Materialize.toast('<p class="flow-text red-text">' + data.message +'</p>', 4000);
     } else {
-       Materialize.toast('<p class="flow-text white-text">' +data.message+ '</p>', 2000);
+      // Show the whole page
+       Materialize.toast('<p class="flow-text white-text">' + data.message + '</p>', 2000);
     }
   }
         });
