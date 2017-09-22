@@ -26,21 +26,19 @@
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li>
-          <div class="row">
-
-
-            <div class="row">
-              <div class="input-field col s5 cyan">
-                <input placeholder="Email" id="email" type="email" class="validate" required>
+            <div class="row cyan">
+              <div class="input-field col s6">
+                <input placeholder="example@example.com" id="email" type="email" class="validate" required>
                 <label for="email">Email</label>
               </div>
-              <div class="input-field col s5 offset-s1 cyan">
+              <div class="input-field col s4 offset-s1 white-text">
                 <input id="password" type="password" class="validate" required>
                 <label for="password">Password</label>
               </div>
+            </div>
         </li>
 
-        <li><a href="Javascript:SendToDb();" class="waves-effect waves-teal btn-large">Login!</a></li>
+        <li><a href="Javascript:Login();" class="waves-effect waves-teal btn-large">Login!</a></li>
       </ul>
       <ul class="side-nav" id="mobile-demo">
         <li><a href="sass.html">Sass</a></li>
@@ -93,9 +91,10 @@
   <script>
     // Ajax Post Here
     // Post to Url
-    function SendToDb() {
+    function Login() {
       var email = document.getElementById('email').value;
       var password = document.getElementById('password').value;
+``
       var dataSent = {
           email: email,
           pword: password
