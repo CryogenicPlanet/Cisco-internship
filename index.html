@@ -65,13 +65,8 @@
                 <div class="row">
 
         <div class="input-field col s12">
-          <input id="first_name" type="text" class="validate">
-          <label for="first_name">First Name</label>
-        </div>
-
-        <div class="input-field col s12">
-          <input id="last_name" type="text" class="validate">
-          <label for="last_name">Last Name</label>
+          <input id="name" type="text" class="validate">
+          <label for="name">Name</label>
         </div>
 
         <div class="input-field col s12">
@@ -83,6 +78,12 @@
           <input id="password" type="password" class="validate">
           <label for="password">Password</label>
         </div>
+
+        <div class="input-field col s12">
+          <input id="confirmpassword" type="password" class="validate">
+          <label for="confirmpassword">Confirm Password</label>
+        </div>
+
 
       </div>
 <div class="row">
@@ -106,7 +107,7 @@
 	url: "https://cisco-backend-cryogenicplanet.c9users.io/login",
   data: JSON.stringify(dataSent),
   cache: true,
-  success: function(data){     
+  success: function(data){
   console.log(data)
  if (!data.status){
       Materialize.toast('<p class="flow-text red-text">' + data.message +'</p>', 4000);
