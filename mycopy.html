@@ -13,7 +13,7 @@
           -webkit-background-size: cover;
           -moz-background-size: cover;
           -o-background-size: cover;
-          background-size: cover;">
+          background-size: cover;" ng-app = "app">
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
@@ -102,14 +102,19 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js">
 
+
+
 // Javascript and Jquery Code Goes Here
+app.
+
+
 
 // Ajax Post Here
 
 // Post to Url
   function SendToDb(){
-     var email = document.getElementById('email').value;
-     var password = document.getElementById('password').value;
+     var email = $("#email");
+     var password = $("#password");
 
     console.log(email);
     console.log(password);
