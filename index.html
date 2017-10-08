@@ -26,9 +26,12 @@
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/materialize.min.js"></script>
+    <div  ng-controller = "loginController">
+      
+    </div>
     <!-- Nav Bar -->
     <nav>
-      <div class="nav-wrapper cyan darken-2"  ng-controller = "loginController">
+      <div class="nav-wrapper cyan darken-2" >
         <a href="#" class="brand-logo">QuickBooks</a>
         <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
         <ul class="right hide-on-med-and-down">
@@ -138,6 +141,7 @@ app.config(function($routeProvider) {
 // Ajax Post Here
 
 // Post to Url
+
   function SendToDb(){
      var email = $("#email");
      var password = $("#password");
