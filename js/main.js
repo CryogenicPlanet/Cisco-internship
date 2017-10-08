@@ -1,16 +1,21 @@
 var app = angular.module("quickbooks", ["ngRoute"]);
-/*
+
 app.config(function($routeProvider) {
-    $routeProvider
+  
+   $routeProvider
     .when("/", {
-        templateUrl : "homepage.html"
+        templateUrl : "login.html",
+        controller: "loginController"
+    })
+    .when("/home", {
+        templateUrl : "homepage.html",
+        controller: "loginController"
+
     });
   });
-  */
 
-app.controller('loginController', function($scope,$http) {
+app.controller('loginController', function($scope, $http, $location) {
     $scope.login = function() {
-            alert("Inside Login Method");
             var url = "https://cisco-backend-cryogenicplanet.c9users.io/login";
             url = "/test.php";
             $http({
@@ -21,10 +26,9 @@ app.controller('loginController', function($scope,$http) {
                 url : url
             }).then(function mySuccess(response) {
                 $scope.success = response.data;
-                alert("Received: " +  $scope.success);
+                $location.path("/home");
             }, function myError(response) {
                 $scope.error = response.statusText;
-                alert("Received Error: " +  $scope.error);
             });
         }
 });
