@@ -10,7 +10,7 @@ app.config(function($routeProvider) {
 
 app.controller('loginController', function($scope,$http) {
     $scope.login = function() {
-           // alert("Inside Login Method");
+           console.log("Inside Login Method");
             var url = "https://cisco-backend-cryogenicplanet.c9users.io/login";
             var data = {email: $scope.lEmail, pword: $scope.lPassword};
             console.log(data);
