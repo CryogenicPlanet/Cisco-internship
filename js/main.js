@@ -31,8 +31,7 @@ app.controller('loginController', function($scope, $http, $location) {
                 $scope.error = response.statusText;
             } */ function sucess(response){
                  if (response.data.status == true){
-             $scope.success = response.data;
-                $location.path("/home");
+                    $scope.home(response.data.uuid);
     } else {
       // Show the whole page
        Materialize.toast('<p class="flow-text white-text">' + response.data.message + '</p>', 2000);
@@ -40,4 +39,16 @@ app.controller('loginController', function($scope, $http, $location) {
       
     }});
         
-}});
+}
+    $scope.home = function(userId)  {   
+            $http({
+                method : "GET",
+                datatype : "json",
+                data: $.param({uuid:userId}),
+                
+            }).then(function sucess(response){
+                $scope.success = response.data;
+                $location.path("/home");
+            });
+    }
+});
