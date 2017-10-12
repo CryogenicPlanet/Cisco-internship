@@ -30,7 +30,6 @@ app.controller('loginController', function($scope, $http, $location) {
             }, function myError(response) {
                 $scope.error = response.statusText;
             } */ function sucess(response){
-                console.log(response.data);
                  if (response.data.status == true){
              $scope.success = response.data;
                 $location.path("/home");
