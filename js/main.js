@@ -9,46 +9,77 @@ app.config(function($routeProvider) {
     })
     .when("/home", {
         templateUrl : "homepage.html",
-        controller: "loginController"
-
+        controller: "homeController"
     });
-  });
+});
 
-app.controller('loginController', function($scope, $http, $location) {
-    $scope.login = function() {
-            var url = "https://cisco-backend-cryogenicplanet.c9users.io/login";
-            var data = {email: $scope.lEmail, pword: $scope.lPassword};
-            $http({
-                method : "POST",
-               contentType: 'application/json',
-                data : JSON.stringify(data),
-                cache: true,
-                url : url
-            }).then(/*function mySuccess(response) {
-                $scope.success = response.data;
-                $location.path("/home");
-            }, function myError(response) {
-                $scope.error = response.statusText;
-            } */ function sucess(response){
-                 if (response.data.status == true){
-                    $scope.home(response.data.uuid);
-    } else {
-      // Show the whole page
-       Materialize.toast('<p class="flow-text white-text">' + response.data.message + '</p>', 2000);
-        $scope.error = response.statusText;
-      
-    }});
-        
-}
-    $scope.home = function(userId)  {   
-            $http({
-                method : "GET",
-                datatype : "json",
-                data: $.param({uuid:userId}),
-                
-            }).then(function sucess(response){
-                $scope.success = response.data;
-                $location.path("/home");
-            });
+app.factory('userService', function($http) {
+    var userService = {};
+    userService.uuid = -1;
+    userService.login = function(email, password){
+        var url = "https://cisco-backend-cryogenicplanet.c9users.io/login";
+        var data = {email: email, pword: password};
+        return $http({
+            method : "POST",
+            contentType: 'application/json',
+            data : JSON.stringify(data),
+            cache: true,
+            url : url
+        }).then(function (response){
+           if(response.data.status == true){
+               userService.uuid = response.data.uuid;
+                return response.data.uuid;
+           } else {
+               throw Error(response.data.message);
+           }
+        });
+    };
+    userService.getUuid = ()=>{return userService.uuid};
+    return userService;
+});
+app.service('newBooksService',function($http, userService){
+    var newBooks = [];
+    newBooks.get = function(){
+       return  $http({
+            method : "GET",
+            url : `https://cisco-backend-cryogenicplanet.c9users.io/newbooks?uuid=` + userService.getUuid()
+             /* headers : {'Accept' : 'application/json'},
+            params: JSON.stringify({uuid:userId}) */
+        }).then(function(responses){
+            return responses.data;
+        })
     }
+    return newBooks;
+});
+
+app.controller('baseController', function($scope, userService) {
+    
+});
+
+app.controller('loginController', function($scope, $http, $location, userService, newBooksService) {
+    $scope.login = function() {
+        userService.login($scope.lEmail, $scope.lPassword)
+        .then(function(uuid) {
+            $location.path("/home");
+        })
+        .catch(function(error) {
+                // Show the whole page
+            Materialize.toast('<p class="flow-text white-text">' + error + '</p>', 2000);            
+            
+        });
+    };
+    console.log('test');
+});
+
+
+app.controller('homeController', function($scope, newBooksService) {
+    console.log("Homepage!");
+    $scope.initialize = function() {
+        newBooksService.get()
+        .then(function(responses){
+            $scope.books = responses;
+            console.log($scope.books);
+        });
+    };
+    $scope.initialize();
 });

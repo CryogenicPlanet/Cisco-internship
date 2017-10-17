@@ -1,4 +1,48 @@
-<div>
-    <h1 style='color:white'>Home Page here</h1>
-
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <div class="row">
+            <div class="col s1">
+                <a href="#" class="brand-logo">
+                    <div style="font-family: 'Berkshire Swash', cursive;">QB</div>
+                </a>
+            </div>
+            <div class="col s7 offset-s1">
+                <nav>
+                    <div class="nav-wrapper grey darken-3">
+                        <form>
+                            <div class="input-field">
+                                <input id="search" placeholder="Search..." type="search" required>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="section grey lighten-2">
+    <div class="container">
+        <div ng-repeat="book in books">
+            <div class="row">
+                <div class="col s6 offset-s3">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <img class="activator" src="https://static.pexels.com/photos/51342/books-education-school-literature-51342.jpeg">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
+                            <p>By <a href="#">{{book.author}}</a> ,Genre: {{book.genre}}</p>
+                            <p><a href="#">{{book.uuid}}</a></p>
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">close</i></span>
+                            <p>{{book.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
