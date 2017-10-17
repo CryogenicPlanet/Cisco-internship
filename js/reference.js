@@ -1,3 +1,4 @@
+//ONLY FOR REFERENCE NO FUNCTIONAL CODE DON'T WORRY ABOUT THIS FILE
 app.factory('userService', function($rootScope, urlService, $http, $q) {
     var obj = {};
     obj.authed = false;
