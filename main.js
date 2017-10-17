@@ -29,13 +29,6 @@ app.controller('loginController', function($scope, $http, $location) {
                 $location.path("/home");
             }, function myError(response) {
                 $scope.error = response.statusText;
-            }),
-            $http({
-                method : "GET",
-                datatype : "json",
-                data: $.param({email: $scope.lEmail, pword: $scope.lPassword}),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                url : url
             });
         }
 });
