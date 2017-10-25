@@ -35,6 +35,12 @@
                             <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
                             <p>By <a href="#">{{book.author}}</a>, {{book.year}}</p>
                             <p><a href="#">{{book.username}}</a></p>
+                            <p>
+                              <!--   <input id="lenderId" type="hidden" ng-model="llenderId" value="{{book.uuid}}"> 
+                                <input id="bookId" type="hidden" ng-model="lbookId" value="{{book.ubid}}"> -->
+                                <a ng-click="borrow(book)" id="borrowBtn" class="waves-effect waves-teal btn orange accent-4">Borrow this Book</a>
+                                
+                            </p>
                         </div>
                         <div class="card-reveal">
                             <span class="card-title grey-text text-darken-4">{{book.bookname}},{{book.year}}, By {{book.author}}.Genre: {{book.genre}}<i class="material-icons right">close</i></span>
