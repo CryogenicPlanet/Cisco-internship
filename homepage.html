@@ -1,9 +1,10 @@
+<div ng-show="homepage">
 <nav>
     <div class="nav-wrapper grey darken-4">
         <div class="row">
             <div class="col s1">
                 <a href="#" class="brand-logo">
-                    <div style="font-family: 'Berkshire Swash', cursive;">QB</div>
+                    <div>QB</div>
                 </a>
             </div>
             <div class="col s7 offset-s1">
@@ -22,19 +23,44 @@
         </div>
     </div>
 </nav>
-<div class="section grey lighten-2">
+<script type="text/javascript" src="">
+     document.getElementsByTagName('body')[0].style ="";
+</script>
+<div class="spinner" ng-show="loading">
+    	<link rel = "stylesheet" type = "text/css" href = "css/loading.css" />
+	<div id = "loader" bgcolor="#212121">
+		<img id = "dot" class = "dots_r" src = "Images/loading/dot.svg"/>
+		<img id = "dot1" class = "dots_r" src = "Images/loading/dot1.svg"/>
+		<img id = "dot2" class = "dots_r" src = "Images/loading/dot2.svg"/>
+		<img id = "dot3" class = "dots_r" src = "Images/loading/dot3.svg"/>
+		<img id = "dot4" class = "dots_r" src = "Images/loading/dot4.svg"/>
+		<img id = "dot5" class = "dots_r" src = "Images/loading/dot5.svg"/>
+		<img id = "dot6" class = "dots_r" src = "Images/loading/dot6.svg"/>
+	
+		<img id = "dot7" class = "dots_l" src = "Images/loading/dot7.svg"/>
+		<img id = "dot8" class = "dots_l" src = "Images/loading/dot8.svg"/>
+		<img id = "dot9" class = "dots_l" src = "Images/loading/dot9.svg"/>
+		<img id = "dot10" class = "dots_l" src = "Images/loading/dot10.svg"/>
+		<img id = "dot11" class = "dots_l" src = "Images/loading/dot11.svg"/>
+		<img id = "dot12" class = "dots_l" src = "Images/loading/dot12.svg"/>
+		<img id = "dot13" class = "dots_l" src = "Images/loading/dot13.svg"/>
+		<img id = "book" src = "Images/loading/book.png"/>	
+	</div>
+</div>
+
+<div class="section grey lighten-2" ng-show="showBooks">
     <div class="container">
         <div ng-repeat="book in books">
             <div class="row">
                 <div class="col s6 offset-s3">
                     <div class="card">
                         <div class="card-image waves-effect waves-block waves-light">
-                            <img class="activator" src="Images/books.jpeg">
+                            <img class="activator" ng-src="{{book.image}}">
                         </div>
                         <div class="card-content">
                             <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
-                            <p>By <a href="#">{{book.author}}</a>, {{book.year}}</p>
-                            <p><a href="#">{{book.username}}</a></p>
+                            <p>Author:  <a href="#">{{book.author}}</a>, {{book.year}}</p>
+                            <p>Owned By: <a href="#">{{book.username}}</a></p>
                             <p>
                               <!--   <input id="lenderId" type="hidden" ng-model="llenderId" value="{{book.uuid}}"> 
                                 <input id="bookId" type="hidden" ng-model="lbookId" value="{{book.ubid}}"> -->
@@ -51,4 +77,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

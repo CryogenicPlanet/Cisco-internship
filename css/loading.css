@@ -1,0 +1,128 @@
+                @keyframes anim-dot-l
+		{
+			0% {
+				   transform: rotate(0deg)
+		           translate(-900%)
+		           rotate(0deg);
+				}
+			85% {
+				   transform: rotate(-360deg)
+		           translate(-900%) 
+		           rotate(360deg);
+				}
+		}
+		
+		@keyframes anim-dot-r
+		{
+			0% {
+				   transform: rotate(0deg)
+		           translate(600%)
+		           rotate(0deg);
+				}
+			65% {
+				   transform: rotate(360deg)
+		           translate(600%) 
+		           rotate(-360deg);
+				}
+		}
+		#book
+		{
+			width:150px;
+			height:150px;
+			left:50%;
+			top:50%;
+			position:absolute;
+			transform: translate(-45%, -50%);
+		}
+		#dot
+		{ 
+			animation-name:anim-dot-r;
+			animation-delay:1.2s;
+		}
+		#dot1
+		{
+			animation-name:anim-dot-r;
+			animation-delay:1.0s;
+		}
+		#dot2
+		{
+			animation-name:anim-dot-r;
+			animation-delay:0.8s;
+		}
+		#dot3
+		{
+			animation-name:anim-dot-r;
+			animation-delay:0.6s;
+		}
+		#dot4
+		{
+			animation-name:anim-dot-r;
+			animation-delay:0.4s;
+		}
+		#dot5
+		{
+			animation-name:anim-dot-r;
+			animation-delay:0.2s;
+		}
+		#dot6
+		{
+			animation-name:anim-dot-r;
+		}
+		#dot7
+		{ 
+			animation-name:anim-dot-l;
+			animation-delay:1.2s;
+		}
+		#dot8
+		{
+			animation-name:anim-dot-l;
+			animation-delay:1.0s;
+		}
+		#dot9
+		{
+			animation-name:anim-dot-l;
+			animation-delay:0.8s;
+		}
+		#dot10
+		{
+			animation-name:anim-dot-l;
+			animation-delay:0.6s;
+		}
+		#dot11
+		{
+			animation-name:anim-dot-l;
+			animation-delay:0.4s;
+		}
+		#dot12
+		{
+			animation-name:anim-dot-l;
+			animation-delay:0.2s;
+		}
+		#dot13
+		{
+			animation-name:anim-dot-l;
+		}
+		.dots_r
+		{
+			max-width:15px;
+			max-height:15px;
+			left:50%;
+			top:50%;
+			position:absolute;
+			transform: translate(600%, -50%);
+			animation-duration:4s;
+			animation-iteration-count:infinite;
+			
+		}
+		.dots_l
+		{
+			max-width:15px;
+			max-height:15px;
+			left:50%;
+			top:50%;
+			position:absolute;
+			transform: translate(-900%, -50%);
+			animation-duration:4s;
+			animation-iteration-count:infinite;
+			
+		}
