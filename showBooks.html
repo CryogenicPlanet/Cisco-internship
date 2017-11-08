@@ -1,0 +1,28 @@
+<div class="container">
+    <div ng-repeat="book in books">
+        <div class="row">
+            <div class="col s6 offset-s3">
+                <div class="card">
+                    <div class="card-image waves-effect waves-block waves-light">
+                        <img class="activator" ng-src="{{book.image}}">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
+                        <p>Author: <a href="#">{{book.author}}</a>, {{book.year}}</p>
+                        <p>Owned By: <a href="#">{{book.username}}</a></p>
+                        <p>
+                            <!--   <input id="lenderId" type="hidden" ng-model="llenderId" value="{{book.uuid}}"> 
+                                <input id="bookId" type="hidden" ng-model="lbookId" value="{{book.ubid}}"> -->
+                            <a ng-click="borrow(book)" id="borrowBtn" class="waves-effect waves-teal btn orange accent-4">Borrow this Book</a>
+
+                        </p>
+                    </div>
+                    <div class="card-reveal">
+                        <span class="card-title grey-text text-darken-4">{{book.bookname}},{{book.year}}, By {{book.author}}.Genre: {{book.genre}}<i class="material-icons right">close</i></span>
+                        <p>{{book.description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

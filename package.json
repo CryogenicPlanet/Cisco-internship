@@ -1,0 +1,10 @@
+{
+  "name": "cisco-internship",
+  "version": "0.1.0",
+  "dependencies": {
+    "angular2-materialize": "^15.1.10",
+    "hammerjs": "^2.0.8",
+    "jquery": "^2.2.4",
+    "materialize-css": "^0.100.2"
+  }
+}
