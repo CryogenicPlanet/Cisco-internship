@@ -92,7 +92,7 @@ app.service('borrowService', function($http, userService) { // Borrow Service
             lender: lender,
             ubid: ubid
         };
-        console.log(data); // Loggin this data
+        // Loggin this data
         return $http({ // Function
             method: "POST",
             headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
@@ -112,7 +112,7 @@ app.service('searchService', function($http) {
                 url: `https://cisco-backend-cryogenicplanet.c9users.io/search?search=${toSearch}`,
                 headers: { 'Content-Type': 'application/json' } // Setting Headers, Function call to get getToken() to send to db
             }).then(function(responses) { // Promise Success
-                console.log("Succesfull");
+
                 //console.log(responses.data);
                 searchService.responses = responses.data; // Return
                 return responses.data;
@@ -134,14 +134,12 @@ app.factory('addBookService', function($http, userService) {
             headers: { 'Content-Type': 'application/json' },
             // Setting Headers, Function call to get getToken() to send to db
         }).then(function(responses) {
-            console.log("Got Books");
+
             return responses.data;
         });
     }
-    addService.addBook = function() {
+    addService.addBook = function(data) {
         { // Function to get add Books to profile
-            var data = { // Data from parameters
-            };
             return $http({ // Function
                 method: "POST",
                 headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
@@ -162,20 +160,18 @@ app.factory('addBookService', function($http, userService) {
             headers: { 'Content-Type': 'application/json' },
             // Setting Headers, Function call to get getToken() to send to db
         }).then(function(responses) {
-            console.log("Got Authors");
-            return responses.data;
+            return responses;
 
         });
     }
-    addService.getGenre = function(genre){
-         return $http({
+    addService.getGenre = function(genre) {
+        return $http({
             method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchAuthor?search=${genre}`,
+            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchGenre?search=${genre}`,
             headers: { 'Content-Type': 'application/json' },
             // Setting Headers, Function call to get getToken() to send to db
         }).then(function(responses) {
-            console.log("Got Genre");
-            return responses.data;
+            return responses;
 
         });
     }
@@ -213,7 +209,9 @@ app.controller('loginController', function($scope, $http, $location, $timeout, u
 
 // Beyond this Point Any Doubt Please Ping Me Immediately, I will reply as soon as possible or comment that line
 app.controller('addBookController', function($scope, userService, addBookService) {
-    angular.element(document).ready(function() {
+    var data = {};
+    var isNew = false;
+    angular.element(document).ready(function() { //what is this?
         $('select').material_select();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -223,20 +221,20 @@ app.controller('addBookController', function($scope, userService, addBookService
             close: 'Ok',
             closeOnSelect: true // Close upon selecting a date,
         });
+        $(document).ready(function() {
+            $('input#year').characterCounter();
+        });
+
 
     });
     $scope.bookSearch = function(keyEvent) {
         var searchBook = document.getElementById("book").value;
-        if (searchBook.length > 3) {
+        if (searchBook.length >= 2) {
             $scope.book = true;
             $scope.loading = true;
-            console.log("Search :" + searchBook);
             addBookService.getBooks(searchBook)
                 .then(function(response) {
                     $scope.books = response;
-                    for (var book of response) {
-                        console.log(book);
-                    }
                     $scope.listBooks = true
                 })
                 .catch(function(err) {
@@ -248,44 +246,105 @@ app.controller('addBookController', function($scope, userService, addBookService
                 });
         }
     }
-    $scope.authorSearch = function(keyEvent){
-         var searchAuthor = document.getElementById("author").value;
-        if (searchAuthor.length > 3) {
+    $scope.authorSearch = function(keyEvent) {
+        var searchAuthor = document.getElementById("author").value;
+        if (searchAuthor.length > 2) {
             $scope.author = true;
             $scope.loadingAuthor = true;
             addBookService.getAuthors(searchAuthor)
-                .then(function(response){
-                    $scope.author = response;
+                .then(function(response) {
+                    $scope.authors = response.data;
+                    $scope.listAuthors = true;
                 })
                 .catch(function(err) {
-                    $scope.cardAuthorMsg = "This book is unavailable";
+                    $scope.cardAuthorMsg = "This author is not there in the database";
                 })
                 .finally(function() {
                     $scope.loadingAuthor = false;
                 });
         }
     }
-    var newBookRadio = document.getElementById("newBook");
+    $scope.genreSearch = function(keyEvent) {
+        var searchGenre = document.getElementById("genre").value;
+        if (searchGenre.length > 2) {
+            $scope.genre = true;
+            $scope.loadingGenre = true;
+            addBookService.getGenre(searchGenre)
+                .then(function(response) {
+                    console.log(response);
+                    $scope.genres = response.data;
+                    $scope.listGenre = true;
+                })
+                .catch(function(err) {
+                    $scope.cardGenreMsg = "This genre is not there in the database";
+                })
+                .finally(function() {
+                    $scope.loadingGenre = false;
+                });
+        }
+    }
+    var newBookRadio = document.getElementById("newBook"); //why newBookRadio
     $scope.newBookClick = function() {
+        data.name = document.getElementById("book").value;
+        console.log("New book");
+        isNew = true;
+        console.log("Book name:" + data.name);
+        document.getElementById("book").disabled = true;
+        $scope.book = false;
         $scope.newBook = true;
+    }
+    $scope.newAuthorClick = function() {
+        data.author = document.getElementById("author").value;
+        console.log("Author name:" + data.author);
+        document.getElementById("author").disabled = true;
+        $scope.author = false;
+    }
+    $scope.newGenreClick = function() {
+        data.genre = document.getElementById("genre").value
+        console.log("Genre name:" + data.genre);
+        document.getElementById("genre").disabled = true;
+        $scope.genre = false;
+    }
+    $scope.addBook = function() {
+        console.log("In Function");
+        if (isNew === false) {
+            console.log("Ubid");
+            var ubid = $("input[name=books]:checked").val();
+            var data = {
+                ubid: ubid,
+                description: document.getElementById("description").value
+            }
+            addBookService.addBook(data);
+        }
+        else {
+            console.log("new Book")
+            data.year = document.getElementById("year").value;
+            if (!($("input[name=authors]:checked").val() == 'undefined')) {
+                var uaid = $("input[name=authors]:checked").val();
+                data.uaid = uaid;
+            }
+            if (!($("input[name=genres]:checked").val() == 'undefined')) {
+                var ugid = $("input[name=genres]:checked").val();
+                data.ugid = ugid;
+            }
+            console.log(data);
+            addBookService.addBook(data);
+        }
     }
 });
 app.controller('homeController', function($scope, $location, newBooksService, borrowService, userService, searchService) {
     $scope.homepage = false;
-    $scope.addBook = function () {
+    $scope.addBook = function() {
         $location.path("/add");
     }
     $scope.myFunct = function(keyEvent) {
         if (keyEvent.which === 13) {
-            console.log("Call Function")
             searchService.finalSearch($scope.search)
                 .then(function(response) {
-                    console.log("Return");
                     $scope.searchPage = true;
                     $scope.showBooks = false;
                     $scope.view = "search";
                     var books = searchService.getResponses();
-                    console.log("Books");
                     //console.log(books);
                     $scope.books = books;
                 });
@@ -297,10 +356,8 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
         $scope.page = false;
         if (token) {
             $scope.homepage = true;
-            console.log(token);
             newBooksService.get()
                 .then(function(responses) {
-                    console.log("Books");
                     $scope.view = "books";
                     $scope.books = responses;
                     $scope.page = true;
@@ -320,7 +377,6 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
     $scope.borrow = function(book) {
         borrowService.borrow(book.uuid, book.ubid)
             .then(function(response) {
-                console.log("success");
                 Materialize.toast('<p class="flow-text white-text">' + response.data.message + '</p>', 2000);
 
             })
@@ -336,7 +392,6 @@ app.controller('userController', function($scope, $routeParams, userService) {
     $scope.userPage = false;
     $scope.loading = true;
     $scope.initialize = function() {
-        console.log(userService.getUsername());
         $scope.name = userService.getUsername();
         $scope.books = userService.getBooks();
         $scope.following = userService.getFollowing();
@@ -346,8 +401,6 @@ app.controller('userController', function($scope, $routeParams, userService) {
     if (!(userService.getBooks())) {
         userService.getDetails()
             .then(function(data) {
-                console.log("getDetails Succesfull");
-                console.log(JSON.parse(sessionStorage.getItem("followers")));
                 $scope.initialize();
             })
             .finally(function(data) {
