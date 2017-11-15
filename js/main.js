@@ -40,7 +40,6 @@ app.factory('userService', function($http) { // This is Factory, Google What a F
                 return response.data.token; // return the token to http function
             })
             .catch(function(response) { // Promise, Basically the program promises to come here when the function is unsucessful and throws an error
-
                 throw Error(response.data.message); // This throws an error
             });
     };
@@ -130,11 +129,10 @@ app.factory('addBookService', function($http, userService) {
     addService.getBooks = function(book) {
         return $http({
             method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchBooks?search=${book}`,
+            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchBooks?search=${book}`,//what does ${book} do?
             headers: { 'Content-Type': 'application/json' },
             // Setting Headers, Function call to get getToken() to send to db
         }).then(function(responses) {
-
             return responses.data;
         });
     }
@@ -177,13 +175,32 @@ app.factory('addBookService', function($http, userService) {
     }
     return addService;
 });
+
+app.service('showAuthorService', function($http){
+    var authorbooks = [];
+    authorbooks.getBooksAuthor = function(){
+        return $http({
+            method: "GET",
+            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchBooks?search=${book}`, //Books is variable which is passed to the function. also you can pass it to that url it will be a different url with author id not the name  
+            headers: { 'Content-Type': 'application/json' },
+            // Setting Headers, Function call to get getToken() to send to db
+        }).then(function(responses) {
+            return responses.data;
+        });
+    }
+    return showAuthorService;
+    
+});
 // Controllers
+
+app.controller('showAuthor', function(showAuthorService){
+});
 
 app.controller('baseController', function($scope, userService) {
 
 });
 
-app.controller('loginController', function($scope, $http, $location, $timeout, userService, newBooksService) { // Controller parameters $scope, $http, $location, $timeout From Angular Itself. userService and newBooksService are user defined Property
+app.controller('loginController', function($scope, $location,$timeout, userService) { // Controller parameters $scope, $http, $location, $timeout From Angular Itself. userService and newBooksService are user defined Property
     this.initialize = function() { // Intitialization Function
         $scope.loading = true; // Scope Variable for loading
         $scope.loginPage = false; // Scope Variable For loginPage
@@ -209,7 +226,7 @@ app.controller('loginController', function($scope, $http, $location, $timeout, u
 
 // Beyond this Point Any Doubt Please Ping Me Immediately, I will reply as soon as possible or comment that line
 app.controller('addBookController', function($scope, userService, addBookService) {
-    var data = {};
+    var data = {};//what does this do?
     var isNew = false;
     angular.element(document).ready(function() { //what is this?
         $('select').material_select();
