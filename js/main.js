@@ -1,4 +1,11 @@
-var app = angular.module("quickbooks", ["ngRoute"]); // Defining The Applications Quickbooks
+var app = angular.module("quickbooks", ["ngRoute", 'ui.materialize']); // Defining The Applications Quickbooks
+var scripts = ['/js/Services/userService.js', '/js/Services/addBookService.js', '/js/Services/newBooksService.js', '/js/Services/searchService.js', '/js/Services/showPagesService.js'];
+var imported = document.createElement('script');
+for (var src of scripts) {
+    console.log(src);
+    imported.src = src;
+    document.head.appendChild(imported);
+} 
 // Route
 app.config(function($routeProvider) { // Making the Router Provider
 
@@ -11,196 +18,39 @@ app.config(function($routeProvider) { // Making the Router Provider
             templateUrl: "homepage.html",
             controller: "homeController"
         })
-        .when("/username/:userId", {
+        .when("/username/", {
             templateUrl: "user.html",
             controller: "userController"
         })
         .when("/add", {
             templateUrl: "addbook.html",
             controller: "addBookController"
-        });
-});
-// Factory
-app.factory('userService', function($http) { // This is Factory, Google What a Factory is. Hash the parameter of $http to send requests with
-    var userService = {}; // Json Object
-    var username; // Variable
-    userService.login = function(email, password) { // Well, what does this suggest?
-        var url = "https://cisco-backend-cryogenicplanet.c9users.io/login"; // Url 
-        var data = { email: email, pword: password }; // Data is email and passsword
-        return $http({ // Returning the function of http to the previous function login()
-                method: "POST", // Type POST
-                contentType: 'application/json', // Datatype
-                data: JSON.stringify(data), // Data here
-                cache: true, // Cache
-                url: url // Url
-            }).then(function(response) { // Promise, Basically the program promises to come here when the function is succesfull and gets data back
-                localStorage.setItem("token", response.data.token); // This is Local Storage which is like cookies to keep you logged so you don't need to keep logging in
-                sessionStorage.setItem('token', response.data.token);
-                userService.getDetails(); // This calls a function to get all the user's details
-                return response.data.token; // return the token to http function
-            })
-            .catch(function(response) { // Promise, Basically the program promises to come here when the function is unsucessful and throws an error
-                throw Error(response.data.message); // This throws an error
-            });
-    };
-    userService.getDetails = function() { // This is function to get your details
-        return $http({ // Returning the function of http to previous function getDetails()
-            method: "GET", // Type GET
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/userDetails`, // Url
-            headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) { // Promise sucessful
-            username = responses.data.response.name; //Username
-            localStorage.setItem("username", username); // Local Storage
-            var usersBooks = JSON.stringify(responses.data.response.books); // Making it JSON
-            var followers = JSON.stringify(responses.data.response.followers); // Making it JSON
-            var following = JSON.stringify(responses.data.response.following); // Making it JSON
-            sessionStorage.setItem("books", usersBooks); // SessionStorage slightly different from Local storage this is stored only for that session like till you close tab or a few mins longer than that
-            sessionStorage.setItem("followers", followers);
-            sessionStorage.setItem("following", following);
-            return responses.data;
-        });
-    }
-    // Function Declaring in one line, Calm Down, Don't worry about it
-    userService.getBooks = () => { return JSON.parse(sessionStorage.getItem("books")); }; // Function returns all the books of your users
-    userService.getFollowers = () => { return JSON.parse(sessionStorage.getItem("followers")); }; // Function returns all followers of the users
-    userService.getFollowing = () => { return JSON.parse(sessionStorage.getItem("following")); }; // Function returns all following of the users
-    userService.getUsername = () => { return localStorage.getItem("username"); }; // Function returns of the username of the user
-    userService.getToken = () => { return localStorage.getItem("token"); }; // Function returns of token of the user
-    return userService;
-});
-// Services
-app.service('newBooksService', function($http, userService) { // New Book Service, Act like Class in Java
-    var newBooks = []; // Blank array
-    newBooks.get = function() { // Function to get New Books
-        return $http({ // By now you should know what this
-            method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/newbooks`,
-            headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) { // Promise Success
-            newBooks.responses = responses.data; // Return
-            return responses.data;
-        });
-    }
-    newBooks.getResponses = () => { return newBooks.responses };
-    return newBooks;
-});
-app.service('borrowService', function($http, userService) { // Borrow Service
-    var borrowService = [];
-    borrowService.borrow = function(lender, ubid) { // Borrow books
-        var data = { // Data from parameters
-            lender: lender,
-            ubid: ubid
-        };
-        // Loggin this data
-        return $http({ // Function
-            method: "POST",
-            headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
-            data: JSON.stringify(data),
-            cache: true,
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/borrow` // Url
         })
-    };
-    return borrowService; // returns this data
-});
-app.service('searchService', function($http) {
-    var searchService = [];
-    searchService.finalSearch = function(toSearch) {
-        { // Function to get New Books
-            return $http({ // By now you should know what this
-                method: "GET",
-                url: `https://cisco-backend-cryogenicplanet.c9users.io/search?search=${toSearch}`,
-                headers: { 'Content-Type': 'application/json' } // Setting Headers, Function call to get getToken() to send to db
-            }).then(function(responses) { // Promise Success
-
-                //console.log(responses.data);
-                searchService.responses = responses.data; // Return
-                return responses.data;
-            });
-        }
-    }
-    searchService.getResponses = () => { return searchService.responses };
-    return searchService;
-
-});
-// service for add books 
-app.factory('addBookService', function($http, userService) {
-    var addService = [];
-
-    addService.getBooks = function(book) {
-        return $http({
-            method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchBooks?search=${book}`,//what does ${book} do?
-            headers: { 'Content-Type': 'application/json' },
-            // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) {
-            return responses.data;
+        .when("/authorbook", {
+            templateUrl: "authors.html",
+            controller: "showAuthorController"
+        })
+        .when("/genres", {
+            templateUrl: "genres.html",
+            controller: "showGenreController"
         });
-    }
-    addService.addBook = function(data) {
-        { // Function to get add Books to profile
-            return $http({ // Function
-                method: "POST",
-                headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
-                data: JSON.stringify(data),
-                cache: true,
-                url: `https://cisco-backend-cryogenicplanet.c9users.io/addBook` // Url
-            }).then(function(responses) {
-
-            });
-        }
-    }
-
-
-    addService.getAuthors = function(author) {
-        return $http({
-            method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchAuthor?search=${author}`,
-            headers: { 'Content-Type': 'application/json' },
-            // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) {
-            return responses;
-
-        });
-    }
-    addService.getGenre = function(genre) {
-        return $http({
-            method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchGenre?search=${genre}`,
-            headers: { 'Content-Type': 'application/json' },
-            // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) {
-            return responses;
-
-        });
-    }
-    return addService;
 });
 
-app.service('showAuthorService', function($http){
-    var authorbooks = [];
-    authorbooks.getBooksAuthor = function(){
-        return $http({
-            method: "GET",
-            url: `https://cisco-backend-cryogenicplanet.c9users.io/searchBooks?search=${book}`, //Books is variable which is passed to the function. also you can pass it to that url it will be a different url with author id not the name  
-            headers: { 'Content-Type': 'application/json' },
-            // Setting Headers, Function call to get getToken() to send to db
-        }).then(function(responses) {
-            return responses.data;
-        });
-    }
-    return showAuthorService;
-    
-});
 // Controllers
+app.controller('showAuthor', function($scope, showAuthorService) {
 
-app.controller('showAuthor', function(showAuthorService){
+    var books = showAuthorService.getResponses();
+    $scope.books = books;
 });
+app.controller('showGenreController', function($scope, showGenreService) {
+    $scope.getgenres = function(string) {
 
+    }
+});
 app.controller('baseController', function($scope, userService) {
 
 });
-
-app.controller('loginController', function($scope, $location,$timeout, userService) { // Controller parameters $scope, $http, $location, $timeout From Angular Itself. userService and newBooksService are user defined Property
+app.controller('loginController', function($scope, $location, $timeout, userService) { // Controller parameters $scope, $http, $location, $timeout From Angular Itself. userService and newBooksService are user defined Property
     this.initialize = function() { // Intitialization Function
         $scope.loading = true; // Scope Variable for loading
         $scope.loginPage = false; // Scope Variable For loginPage
@@ -223,10 +73,9 @@ app.controller('loginController', function($scope, $location,$timeout, userServi
     this.initialize(); // Function called to Intitialize
     //console.log('test');
 });
-
 // Beyond this Point Any Doubt Please Ping Me Immediately, I will reply as soon as possible or comment that line
 app.controller('addBookController', function($scope, userService, addBookService) {
-    var data = {};//what does this do?
+    var data = {}; //what does this do?
     var isNew = false;
     angular.element(document).ready(function() { //what is this?
         $('select').material_select();
@@ -405,7 +254,6 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
     $scope.initialize();
 });
 app.controller('userController', function($scope, $routeParams, userService) {
-    var userId = $routeParams.userId;
     $scope.userPage = false;
     $scope.loading = true;
     $scope.initialize = function() {
@@ -423,11 +271,23 @@ app.controller('userController', function($scope, $routeParams, userService) {
             .finally(function(data) {
                 $scope.loading = false;
                 $scope.userPage = true;
+                angular.element(document).ready(function() { //what is this?
+                    $(document).ready(function() {
+                        $('ul.tabs').tabs();
+                    });
+
+                });
             });
     }
     else {
         $scope.initialize();
         $scope.loading = false;
         $scope.userPage = true;
+        angular.element(document).ready(function() { //what is this?
+            $(document).ready(function() {
+                $('ul.tabs').tabs();
+            });
+
+        });
     }
 })

@@ -46,6 +46,7 @@
                             <a class="waves-effect waves-teal teal lighten-1 btn-flat col white-text s2 offset-s1">Chat</a>
                         </div>
                     </div>
+                    <!--
                     <div class="col s4" id="featured">
                         <h5>Featured Books</h5>
                         <table>
@@ -72,7 +73,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -106,10 +107,10 @@
                     <div ng-repeat="book in books">
                         <li class="collection-item avatar">
                             <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
-                            <span class="title"><a ng-href="#modal{{book.ubid}}" target="_self">{{book.bookname}}</a></span>
+                            <span class="title"><a data-target="modal{{book.ubid}}">{{book.bookname}}</a></span>
                             <p>By <a href="">{{book.author}}</a>
                             </p>
-                            <p class="truncate"><a href="#modal{{book.ubid}}" target="_self">{{book.description}}</a></p>
+                            <p class="truncate"><a data-target="modal{{book.ubid}}">{{book.description}}</a></p>
                             <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                         </li>
                     </div>
@@ -121,8 +122,8 @@
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s6"><a class="active" target="_self" href="#!username#followers">Followers</a></li>
-                            <li class="tab col s6"><a href="##following" target="_self">Following</a></li>
+                            <li class="tab col s6"><a class="active" href="#followers">Followers</a></li>
+                            <li class="tab col s6"><a href="#following">Following</a></li>
                         </ul>
                     </div>
                     <div id="followers" class="col s12">
