@@ -1,0 +1,182 @@
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <a href="#" class="brand-logo">
+            <div>QB</div>
+        </a>
+    </div>
+</nav>
+<div class="spinner" ng-show="loading">
+    <link rel = "stylesheet" type = "text/css" href = "css/loading.css" />
+	<div id = "loader" bgcolor="#212121">
+		<img id = "dot" class = "dots_r" src = "Images/loading/dot.svg"/>
+		<img id = "dot1" class = "dots_r" src = "Images/loading/dot1.svg"/>
+		<img id = "dot2" class = "dots_r" src = "Images/loading/dot2.svg"/>
+		<img id = "dot3" class = "dots_r" src = "Images/loading/dot3.svg"/>
+		<img id = "dot4" class = "dots_r" src = "Images/loading/dot4.svg"/>
+		<img id = "dot5" class = "dots_r" src = "Images/loading/dot5.svg"/>
+		<img id = "dot6" class = "dots_r" src = "Images/loading/dot6.svg"/>
+	
+		<img id = "dot7" class = "dots_l" src = "Images/loading/dot7.svg"/>
+		<img id = "dot8" class = "dots_l" src = "Images/loading/dot8.svg"/>
+		<img id = "dot9" class = "dots_l" src = "Images/loading/dot9.svg"/>
+		<img id = "dot10" class = "dots_l" src = "Images/loading/dot10.svg"/>
+		<img id = "dot11" class = "dots_l" src = "Images/loading/dot11.svg"/>
+		<img id = "dot12" class = "dots_l" src = "Images/loading/dot12.svg"/>
+		<img id = "dot13" class = "dots_l" src = "Images/loading/dot13.svg"/>
+		<img id = "book" src = "Images/loading/book.png"/>	
+	</div>
+</div>
+<div class="section grey lighten-2" ng-show="userPage">
+    <div class="row">
+        <div class="s10 offset-s2">
+            <div class="card-panel grey lighten-4 col s10 offset-s1 z-depth-0">
+                <div class="row valign-wrapper">
+                    <div class="col s3">
+                        <img src="https://thebenclark.files.wordpress.com/2014/03/facebook-default-no-profile-pic.jpg" alt="" class="circle responsive-img">
+                        <!-- notice the "circle" class -->
+                    </div>
+                    <div class="col s4">
+                        <div class="row">
+                            <span class="black-text col s8 offset-s2">
+                            <h5>{{name}}</h5>
+                        </span>
+                        </div>
+                        <div class="row">
+                            <a class="waves-effect waves-teal teal darken-2 btn-flat white-text col s2 offset-s2">Follow</a>
+                            <a class="waves-effect waves-teal teal lighten-1 btn-flat col white-text s2 offset-s1">Chat</a>
+                        </div>
+                    </div>
+                    <!--
+                    <div class="col s4" id="featured">
+                        <h5>Featured Books</h5>
+                        <table>
+                            <tr>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                                <td>
+                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-repeat="book in books">
+        <div ng-attr-id="{{ 'modal-' + book.ubid }}" class="modal modal-fixed-footer grey lighten-3">
+            <div class="row">
+                <div class="modal-content">
+                    <div class="col s6 black">
+                        <img class="responsive-img" ng-src="{{book.image}}">
+                    </div>
+                    <div class="col s6 grey lighten-4">
+                        <h4>{{book.bookname}} By {{book.author}}</h4>
+                        <h5>{{book.genre}}</h5>
+                        <div class="divider"></div>
+                        <p>{{book.description}}</p>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer grey lighten-3">
+                <a ng-click="borrow(book)" id="borrowBtn" class="modal-action modal-close waves-effect waves-green btn-flat teal s2 white-text">Borrow</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col s6 offset-s1" id="all">
+            <div class="card-panel grey lighten-4 z-depth-0">
+                <ul class="collection">
+                    <div ng-repeat="book in books">
+                        <li class="collection-item avatar">
+                            <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
+                            <span class="title"><a data-target="modal{{book.ubid}}">{{book.bookname}}</a></span>
+                            <p>By <a href="">{{book.author}}</a>
+                            </p>
+                            <p class="truncate"><a data-target="modal{{book.ubid}}">{{book.description}}</a></p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+        <div class="col s3 offset-s1" id="sidebar">
+            <div class="card-panel grey lighten-4  z-depth-0">
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s6"><a class="active" href="#followers">Followers</a></li>
+                            <li class="tab col s6"><a href="#following">Following</a></li>
+                        </ul>
+                    </div>
+                    <div id="followers" class="col s12">
+                        <div class="collection">
+                            <div ng-repeat="follower in followers"> <a href="#!" class="collection-item">{{follower.name}}</a></div>
+                           
+                        </div>
+                    </div>
+                    <div id="following" class="col s12">
+                        <div class="collection">
+                           <div ng-repeat="follower in following"> <a href="#!" class="collection-item">{{follower.name}}</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <ul class="tabs">
+                            <li class="tab col s6"><a href="#test3">Author They Read</a></li>
+                            <li class="tab col s6"><a href="#test4">Genre They Read</a></li>
+                        </ul>
+                    </div>
+                    <div id="test3" class="col s12">
+                        <div class="collection">
+                            <a href="#!" class="collection-item">Author</a>
+                            <a href="#!" class="collection-item">Author</a>
+                            <a href="#!" class="collection-item">Author</a>
+                            <a href="#!" class="collection-item">Author</a>
+                        </div>
+                    </div>
+                    <div id="test4" class="col s12">
+                        <div class="collection">
+                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="#!" class="collection-item">Alvin</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
+        $('.modal').modal();
+    });
+    $(document).ready(function() {
+        $('.materialboxed').materialbox();
+    });
+      $(document).ready(function(){
+    $('ul.tabs').tabs();
+  });
+</script>
+    
