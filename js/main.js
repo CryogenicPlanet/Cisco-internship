@@ -1,11 +1,12 @@
 var app = angular.module("quickbooks", ["ngRoute", 'ui.materialize']); // Defining The Applications Quickbooks
-var scripts = ['/js/Services/userService.js', '/js/Services/addBookService.js', '/js/Services/newBooksService.js', '/js/Services/searchService.js', '/js/Services/showPagesService.js'];
-var imported = document.createElement('script');
+
+var scripts = ['/js/Service/addBookService.js', '/js/Service/newBooksService.js', '/js/Service/searchService.js', '/js/Service/showPagesService.js'];
+
 for (var src of scripts) {
-    console.log(src);
+    var imported = document.createElement('script');
     imported.src = src;
     document.head.appendChild(imported);
-} 
+}
 // Route
 app.config(function($routeProvider) { // Making the Router Provider
 
@@ -18,7 +19,7 @@ app.config(function($routeProvider) { // Making the Router Provider
             templateUrl: "homepage.html",
             controller: "homeController"
         })
-        .when("/username/", {
+        .when("/username/:userId", {
             templateUrl: "user.html",
             controller: "userController"
         })
@@ -26,7 +27,7 @@ app.config(function($routeProvider) { // Making the Router Provider
             templateUrl: "addbook.html",
             controller: "addBookController"
         })
-        .when("/authorbook", {
+        .when("/authorbook/:authorId", {
             templateUrl: "authors.html",
             controller: "showAuthorController"
         })
@@ -35,17 +36,30 @@ app.config(function($routeProvider) { // Making the Router Provider
             controller: "showGenreController"
         });
 });
-
 // Controllers
-app.controller('showAuthor', function($scope, showAuthorService) {
+//Controller for the author page i.e showAuthorService
 
-    var books = showAuthorService.getResponses();
-    $scope.books = books;
+app.controller('showAuthorController', function($scope, $routeParams, showAuthorService) {
+    this.initialize = function(){
+        $scope.page = false;
+        $scope.loading = true;
+    }
+    var authorId = $routeParams.authorId;
+    console.log("Author ID :" + authorId);
+    showAuthorService.getResponses(authorId).then(function(authorbooks) {
+        $scope.authorName = authorbooks[0].author.Name;
+        $scope.authorbooks = authorbooks;
+    }).finally(function(){
+       $scope.loading = false;
+       $scope.page = true;
+    });
+
 });
+//Controller for the genre page i.e showGenreService
 app.controller('showGenreController', function($scope, showGenreService) {
     $scope.getgenres = function(string) {
 
-    }
+    };
 });
 app.controller('baseController', function($scope, userService) {
 

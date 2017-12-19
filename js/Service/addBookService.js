@@ -1,4 +1,4 @@
-var app = angular.module("quickbooks");
+//var app = angular.module("quickbooks");
 
 app.factory('addBookService', function($http, userService) {
     var addService = [];
@@ -26,8 +26,6 @@ app.factory('addBookService', function($http, userService) {
             });
         }
     }
-
-
     addService.getAuthors = function(author) {
         return $http({
             method: "GET",

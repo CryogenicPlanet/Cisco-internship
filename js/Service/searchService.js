@@ -1,5 +1,4 @@
 var app = angular.module("quickbooks");
-
 app.service('searchService', function($http) {
     var searchService = [];
     searchService.finalSearch = function(toSearch) {

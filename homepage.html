@@ -7,7 +7,7 @@
                         <div>QB</div>
                     </a>
                 </div>
-                <div class="col s7 offset-s1">
+                <div class="col s6 offset-s2">
                     <nav>
                         <div class="nav-wrapper grey darken-3">
                             <form>
@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="card-content">
                                         <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
-                                        <p>Author: <a href="#">{{book.author}}</a>, {{book.year}}</p>
+                                        <p>Author: <a href = "authors.html">{{book.author}}</a>, {{book.year}}</p>
                                         <p>Owned By: <a href="#">{{book.username}}</a></p>
                                         <p>
                                             <!--   <input id="lenderId" type="hidden" ng-model="llenderId" value="{{book.uuid}}"> 
@@ -89,9 +89,9 @@
                                     <div ng-repeat="book in books">
                                         <li class="collection-item avatar">
                                             <img src="Images/books.jpeg" alt="" class="circle">
-                                            <span class="title"><a>{{book.item.title}}, {{book.item.year}}</a></span>
-                                            <p>Written by :<a>{{book.item.author}}</a></p>
-                                            <p>Genre : <a>{{book.item.genre}}</a></p>
+                                            <span class="title"><a href="#">{{book.item.title}}, {{book.item.year}}</a></span>
+                                            <p>Written by :<a href = "authors.html">{{book.item.author}}</a></p>
+                                            <p>Genre : <a href="#">{{book.item.genre}}</a></p>
                                             <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                                         </li>
                                     </div>

@@ -1,4 +1,4 @@
-var app = angular.module("quickbooks");
+//var app = angular.module("quickbooks");
 app.service('newBooksService', function($http, userService) { // New Book Service, Act like Class in Java
     var newBooks = []; // Blank array
     newBooks.get = function() { // Function to get New Books

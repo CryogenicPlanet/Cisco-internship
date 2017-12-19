@@ -1,3 +1,4 @@
+//var app = angular.module("quickbooks");
 app.service('borrowService', function($http, userService) { // Borrow Service
     var borrowService = [];
     borrowService.borrow = function(lender, ubid) { // Borrow books
