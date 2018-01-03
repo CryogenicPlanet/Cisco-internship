@@ -6,7 +6,7 @@ app.service('searchService', function($http) {
             return $http({
                 method: "GET",
                 url: `https://cisco-backend-cryogenicplanet.c9users.io/search?search=${toSearch}`,
-                headers: { 'Content-Type': 'application/json' } // Setting Headers, Function call to get getToken() to send to db
+                headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() } // Setting Headers, Function call to get getToken() to send to db
             }).then(function(responses) { // Promise Success
 
                 //console.log(responses.data);
