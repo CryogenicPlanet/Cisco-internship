@@ -1,0 +1,202 @@
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <div class="row">
+            <div class="col s1">
+                <a href="#" class="brand-logo">
+                    <div>QB</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="section grey lighten-2">
+    <div class="container">
+        <div class="card white">
+            <div class="card-content">
+                <div class="row">
+                    <p class="flow-text">Add a book</p>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <input placeholder="Angels and Demons" id="book" type="text" class="validate" ng-keypress="bookSearch($event)" ng-model="searchBook" value="a">
+                        <label class = "active" for="book">Book Name</label>
+                    </div>
+                </div>
+                <div ng-show="book">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card-panel grey lighten-4">
+                                <div ng-show="loading">
+                                    <div class="row">
+                                        <div class="col s6 offset-s3">
+                                            <span class="black-text" ng-model="cardMsg">Loading Books</span>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col s6 offset-s3">
+                                            <div class="preloader-wrapper active">
+                                                <div class="spinner-layer spinner-red-only">
+                                                    <div class="circle-clipper left">
+                                                        <div class="circle"></div>
+                                                    </div>
+                                                    <div class="gap-patch">
+                                                        <div class="circle"></div>
+                                                    </div>
+                                                    <div class="circle-clipper right">
+                                                        <div class="circle"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="listBooks">
+                                    <div ng-repeat="book in books">
+                                        <p>
+                                            <input name="books" type="radio" id="{{book.item.ubid}}" value="{{book.item.ubid}}" />
+                                            <label for="{{book.item.ubid}}" class="black-text">{{book.item.title}}</label>
+                                        </p>
+                                    </div>
+                                    <p>
+                                        <a class="waves-effect waves-light btn amber" ng-click="newBookClick()">Add a new book</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="newBook">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Fiction" id="genre" type="text" class="validate" ng-keypress="genreSearch($event)" ng-model="searchGenre" value="a">
+                            <label class = "active" for="genre">Genre</label>
+                        </div>
+                        <div ng-show="genre">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card-panel grey lighten-4">
+                                        <div ng-show="loadingGenre">
+                                            <div class="row">
+                                                <div class="col s6 offset-s3">
+                                                    <span class="black-text" ng-model="cardGenreMsg">Loading Genre</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s6 offset-s3">
+                                                    <div class="preloader-wrapper active">
+                                                        <div class="spinner-layer spinner-red-only">
+                                                            <div class="circle-clipper left">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                            <div class="gap-patch">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                            <div class="circle-clipper right">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="listGenre">
+                                            <div ng-repeat="genre in genres">
+                                                <p>
+                                                    <input name="genres" type="radio" id="{{genre.item.UGID}}" />
+                                                    <label for="{{genre.item.UGID}}" class="black-text">{{genre.item.Name}}</label>
+                                                </p>
+                                            </div>
+                                            <p>
+                                                <a class="waves-effect waves-light btn amber" ng-click="newGenreClick()">Add a new genre</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input placeholder="Dan Brown" id="author" type="text" class="validate" ng-keypress="authorSearch($event)" ng-model="searchAuthor" value="a">
+                            <label class = "active" for="author">Author</label>
+                        </div>
+                        <div ng-show="author">
+                            <div class="row">
+                                <div class="col s12">
+                                    <div class="card-panel grey lighten-4">
+                                        <div ng-show="loadingAuthor">
+                                            <div class="row">
+                                                <div class="col s6 offset-s3">
+                                                    <span class="black-text" ng-model="cardAuthorMsg">Loading Authors</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col s6 offset-s3">
+                                                    <div class="preloader-wrapper active">
+                                                        <div class="spinner-layer spinner-red-only">
+                                                            <div class="circle-clipper left">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                            <div class="gap-patch">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                            <div class="circle-clipper right">
+                                                                <div class="circle"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div ng-show="listAuthors">
+                                            <div ng-repeat="author in authors">
+                                                <p>
+                                                    <input name="authors" type="radio" id="{{author.item.UAID}}" />
+                                                    <label for="{{author.item.UAID}}" class="black-text">{{author.item.Name}}</label>
+                                                </p>
+                                            </div>
+                                            <p>
+                                                <a class="waves-effect waves-light btn amber" ng-click="newAuthorClick()">Add a new author</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input id="year" type="number" data-length="4">
+                            <label for="year">Years</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <textarea id="description" class="materialize-textarea" data-length="120"></textarea>
+                        <label for="description">Description</label>
+                    </div>
+                </div>
+                <!--
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Image of the book</span>
+                            <input type="file">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div> -->
+                <div class="row">
+                    <div class="col s4 offset-s4">
+                        <button class="btn waves-effect waves-light" type="submit" ng-click="addBook()" name="action">Submit Your book
+                             <i class="material-icons right">send</i>
+                       </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

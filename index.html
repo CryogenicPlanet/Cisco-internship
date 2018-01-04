@@ -1,180 +1,46 @@
 <!DOCTYPE html>
-<html  ng-app="quickbooks">
-  <head>
+<html ng-app="quickbooks">
 
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head>
 
-    <!--Import Angular JS-->
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
-      <script type="text/javascript" src="/js/main.js"></script>
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+  <!--Import Angular JS-->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
+  <script type="text/javascript" src="/js/Service/addBookService.js"></script>
+  <script type="text/javascript" src="/js/Service/newBooksService.js"></script>
+  <script type="text/javascript" src="/js/Service/showPagesService.js"></script>
+  <script type="text/javascript" src="/js/Service/borrowService.js"></script>
+  <script type="text/javascript" src="/js/Service/userService.js"></script>
+  <script type="text/javascript" src="/js/Service/searchService.js"></script>
+  <script type="text/javascript" src="/js/Service/requests.js"></script>
+  <script type="text/javascript" src="/js/Service/borrowedBooksService.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  </head>
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <body style="background: url('https://static.pexels.com/photos/159788/cup-of-tea-book-table-reading-159788.jpeg') no-repeat center center fixed;
-          -webkit-background-size: cover;
-          -moz-background-size: cover;
-          -o-background-size: cover;
-          background-size: cover;">
-    <!--Import jQuery before materialize.js-->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script type="text/javascript" src="js/materialize.min.js"></script>
-    <div  ng-controller = "loginController">
-      
-    </div>
-    <!-- Nav Bar -->
-    <nav>
-      <div class="nav-wrapper cyan darken-2" >
-        <a href="#" class="brand-logo">QuickBooks</a>
-        <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-        <ul class="right hide-on-med-and-down">
-          <li><div class="row">
-              <!-- Email input field in Nav Bar-->
-            <div class="row">
-              <div class="input-field col s7 pull-s2 cyan">
-                <input placeholder="Email" id="email" type="email" class="validate" ng-model="lEmail" required autofocus>
-                <label for="email">Email</label>
-              </div>
-              <!--Password input field in Nav Bar-->
-              <div class="input-field col s5 pull-s1 cyan">
-                <input id="password" type="password" class="validate" ng-model="lPassword" required>
-                <label for="password">Password</label>
-              </div>
-              </div>
-              </div>
-              
-              </li>
-              <!--Sending Data to Server-->
-          <li><a ng-click="login()" id="loginBtn" class="waves-effect waves-teal btn-large">Login</a></li>
+</head>
 
-        </ul>
-        <!--Nav Bar and mobile stuff-->
-        <ul class="side-nav" id="mobile-demo">
-          <li><a href="sass.html">Sass</a></li>
-          <li><a href="badges.html">Components</a></li>
-          <li><a href="collapsible.html">Javascript</a></li>
-          <li><a href="mobile.html">Mobile</a></li>
+<body bgcolor="#212121">
+  <!--Import jQuery before materialize.js-->
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="js/materialize.min.js"></script>
 
-        </ul>
+  <!-- All partial HTMLs load here -->
+  <div ng-controller="baseController">
+    <div ng-view></div>
+  </div>
 
-      </div>
-</nav>
-<!-- End of Nav Bar-->
-
-<!--Sign Up card-->
-
-<div class="row">
-    <div class="col s3 offset-s8">
-        <div class="card white">
-          <div class="card-content blue-text">
-            <span class="card-title">Sign Up Here</span>
-            <p> Free for ever. For bookishly ever after</p>
-          </div>
-        <div class="card-action">
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <!--Username input field-->
-      <div class="input-field col s12">
-        <input id="first_name" type="text" class="validate">
-        <label for="first_name">Userame</label>
-      </div>
-      <!--Email input field-->
-      <div class="input-field col s12">
-        <input id="email" type="email" class="validate">
-        <label for="email">Email</label>
-      </div>
-      <!--Password input field-->
-      <div class="input-field col s12">
-        <input id="password" type="password" class="validate">
-        <label for="password">Password</label>
-      </div>
-      <!--Confirm Password input field-->
-      <div class="input-field col s12">
-        <input id="confirmpassword" type="password" class="validate">
-        <label for="password">Confirm Password</label>
-      </div>
-    <!--Submit button-->
-    <div class="row">
-      <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right"></i>
-      </button>
-      </div>
-
-    </div>
-  </form>
-</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-<div ng-view></div>
-
-<script>
-// Javascript and Jquery Code Goes Here
-//routing to homepage code
-/*
-var app = angular.module("quickbooks", ["ngRoute"]);
-
-app.config(function($routeProvider) {
-    $routeProvider
-    .when("/", {
-        templateUrl : "/homepage.html",
-      })
-    });
-    
-   
-
- 
-  
-
-// Ajax Post Here
-
-// Post to Url
-
-  function SendToDb(){
-     var email = $("#email");
-     var password = $("#password");
-
-    console.log(email.val());
-    console.log(password.val());
-     var $injector = app.$injector.getElementById("loginBtn");
-
-    var $location = $injector.get('$location');  
-    console.log("Location: " + $location);
-
-console.log("after lcoation ");
-
-    $.ajax({
-      type : "Post",
-      url : "https://cisco-backend-cryogenicplanet.c9users.io/login ",
-      datatype : "json",
-      data : {
-        email: email,
-        pword: password,
-      },
-      success: function(data)
-                  {
-                    if (!data.status){
-                      Materialize.toast(data.message, 4000) // 4000 is the duration of the toast
-                    } 
-                    
-                  }
-    });
-    
-  }
-  */
-
-// Intialisation
-        $(".button-collapse").sideNav();
-</script>
-  </body>
+</body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> a0b8495302b1daa54a7b4c03501cd2c8c2dec984

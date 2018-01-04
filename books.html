@@ -1,0 +1,78 @@
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <a href="#" class="brand-logo">
+            <div>QB</div>
+        </a>
+    </div>
+</nav>
+<div class="spinner" ng-show="bookloading">
+    <link rel="stylesheet" type="text/css" href="css/loading.css" />
+    <div id="loader" bgcolor="#212121">
+        <img id="dot" class="dots_r" src="Images/loading/dot.svg" />
+        <img id="dot1" class="dots_r" src="Images/loading/dot1.svg" />
+        <img id="dot2" class="dots_r" src="Images/loading/dot2.svg" />
+        <img id="dot3" class="dots_r" src="Images/loading/dot3.svg" />
+        <img id="dot4" class="dots_r" src="Images/loading/dot4.svg" />
+        <img id="dot5" class="dots_r" src="Images/loading/dot5.svg" />
+        <img id="dot6" class="dots_r" src="Images/loading/dot6.svg" />
+
+        <img id="dot7" class="dots_l" src="Images/loading/dot7.svg" />
+        <img id="dot8" class="dots_l" src="Images/loading/dot8.svg" />
+        <img id="dot9" class="dots_l" src="Images/loading/dot9.svg" />
+        <img id="dot10" class="dots_l" src="Images/loading/dot10.svg" />
+        <img id="dot11" class="dots_l" src="Images/loading/dot11.svg" />
+        <img id="dot12" class="dots_l" src="Images/loading/dot12.svg" />
+        <img id="dot13" class="dots_l" src="Images/loading/dot13.svg" />
+        <img id="book" src="Images/loading/book.png" />
+    </div>
+</div>
+<div class="section grey lighten-2" ng-show="bookpage">
+    <div class="row">
+        <div class="s10 offset-s2">
+            <div class="card-panel grey lighten-4 col s10 offset-s1 z-depth-0">
+                <div class="row valign-wrapper">
+                    <div class="col s3">
+                        <img src="Images/books.jpeg" alt="" class="responsive-img">
+                        <!-- notice the "circle" class -->
+                    </div>
+                    <div class="col s4">
+                        <div class="row">
+                            <span class="black-text col s8 offset-s2">
+                            <h5>{{bookname}}</h5></span>
+                        </div>
+                    </div>
+                    <div class = "col s5">
+                        <div class = "row">
+                            <span class="black-text col s8 offset-s2">
+                            <h6>Written By: <a href = "" ng-click = "openAuthor(authorname)">{{authorname}}</a></h6></span>
+                        </div>
+                        <div class = "row">
+                            <span class="black-text col s8 offset-s2">
+                            <h6>Genre: <a href = "" ng-click = "openGenre(genrename)">{{genrename}}</a></h6></span>
+                        </div>
+                        <div class = "row">
+                            <span class="black-text col s8 offset-s2">
+                            <h6>Published in: {{year}}</h6></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s1" id="all">
+            <div class="card-panel grey lighten-4 z-depth-0">
+                <h4>Owners: </h4>
+                <ul class="collection">
+                    <div ng-repeat="owner in owners">
+                        <li class="collection-item avatar">
+                            <span class="title"><a href = "" class = "modal-trigger" ng-click = "userpage">{{owner.username}}</a></span>
+                            <p>Description: {{owner.description}}</p>
+                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
