@@ -9,8 +9,8 @@
         </div>
     </div>
 </nav>
-<div class="spinner" ng-show="loading">
-    <link rel="stylesheet" type="text/css" href="css/loading.css"/>
+<div class="spinner" ng-show="authorloading">
+    <link rel="stylesheet" type="text/css" href="css/loading.css" />
     <div id="loader" bgcolor="#212121">
         <img id="dot" class="dots_r" src="Images/loading/dot.svg" />
         <img id="dot1" class="dots_r" src="Images/loading/dot1.svg" />
@@ -31,27 +31,25 @@
     </div>
 </div>
 <div class="section grey lighten-2">
-    <div class="container" ng-show="page">
+    <div class="container" ng-show="authorpage">
         <div class="row">
-            <div class="col s6 offset-s3">
+            <div class="col s12">
                 <div class="card white">
+                    <div class="card-title white flow-text center-align">Author : {{authorName}}</div>
                     <div class="card-content white grey-text text-darken-4">
-                        <span class="card-title white">Author :</span>
-                        <p class="flow-text">{{authorName}}</p>
+                        <ul class="collection">
+                            <div ng-repeat="authorbook in authorbooks">
+                                <li class="collection-item avatar">
+                                    <img src="Images/books.jpeg" alt="" class="circle">
+                                    <span class="title"><a>{{authorbook.bookname}}</a></span>
+                                    <p>Published on : {{authorbook.year}}</p>
+                                    <p>Genre : <a href = "" ng-click = "openGenre(authorbook.genre.Name)">{{authorbook.genre.Name}}</a></p>
+                                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                                </li>
+                            </div>
+                        </ul>
                     </div>
                 </div>
-            </div>
-            <div class="col s8 offset-s2">
-                <ul class="collection">
-                    <div ng-repeat="authorbook in authorbooks">
-                        <li class="collection-item avatar">
-                            <img src="Images/books.jpeg" alt="" class="circle">
-                            <span class="title"><a>{{authorbook.bookname}}, {{authorbook.year}}</a></span>
-                            <p>Written by :<a href = "authors.html">{{authorbook.author.Name}}</a></p>
-                            <p>Genre : <a>{{authorbook.genre.Name}}</a></p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                        </li>
-                    </div>
             </div>
         </div>
     </div>

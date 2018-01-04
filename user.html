@@ -5,26 +5,26 @@
         </a>
     </div>
 </nav>
-<div class="spinner" ng-show="loading">
-    <link rel = "stylesheet" type = "text/css" href = "css/loading.css" />
-	<div id = "loader" bgcolor="#212121">
-		<img id = "dot" class = "dots_r" src = "Images/loading/dot.svg"/>
-		<img id = "dot1" class = "dots_r" src = "Images/loading/dot1.svg"/>
-		<img id = "dot2" class = "dots_r" src = "Images/loading/dot2.svg"/>
-		<img id = "dot3" class = "dots_r" src = "Images/loading/dot3.svg"/>
-		<img id = "dot4" class = "dots_r" src = "Images/loading/dot4.svg"/>
-		<img id = "dot5" class = "dots_r" src = "Images/loading/dot5.svg"/>
-		<img id = "dot6" class = "dots_r" src = "Images/loading/dot6.svg"/>
-	
-		<img id = "dot7" class = "dots_l" src = "Images/loading/dot7.svg"/>
-		<img id = "dot8" class = "dots_l" src = "Images/loading/dot8.svg"/>
-		<img id = "dot9" class = "dots_l" src = "Images/loading/dot9.svg"/>
-		<img id = "dot10" class = "dots_l" src = "Images/loading/dot10.svg"/>
-		<img id = "dot11" class = "dots_l" src = "Images/loading/dot11.svg"/>
-		<img id = "dot12" class = "dots_l" src = "Images/loading/dot12.svg"/>
-		<img id = "dot13" class = "dots_l" src = "Images/loading/dot13.svg"/>
-		<img id = "book" src = "Images/loading/book.png"/>	
-	</div>
+<div class="spinner" ng-show="userloading">
+    <link rel="stylesheet" type="text/css" href="css/loading.css" />
+    <div id="loader" bgcolor="#212121">
+        <img id="dot" class="dots_r" src="Images/loading/dot.svg" />
+        <img id="dot1" class="dots_r" src="Images/loading/dot1.svg" />
+        <img id="dot2" class="dots_r" src="Images/loading/dot2.svg" />
+        <img id="dot3" class="dots_r" src="Images/loading/dot3.svg" />
+        <img id="dot4" class="dots_r" src="Images/loading/dot4.svg" />
+        <img id="dot5" class="dots_r" src="Images/loading/dot5.svg" />
+        <img id="dot6" class="dots_r" src="Images/loading/dot6.svg" />
+
+        <img id="dot7" class="dots_l" src="Images/loading/dot7.svg" />
+        <img id="dot8" class="dots_l" src="Images/loading/dot8.svg" />
+        <img id="dot9" class="dots_l" src="Images/loading/dot9.svg" />
+        <img id="dot10" class="dots_l" src="Images/loading/dot10.svg" />
+        <img id="dot11" class="dots_l" src="Images/loading/dot11.svg" />
+        <img id="dot12" class="dots_l" src="Images/loading/dot12.svg" />
+        <img id="dot13" class="dots_l" src="Images/loading/dot13.svg" />
+        <img id="book" src="Images/loading/book.png" />
+    </div>
 </div>
 <div class="section grey lighten-2" ng-show="userPage">
     <div class="row">
@@ -42,141 +42,167 @@
                         </span>
                         </div>
                         <div class="row">
-                            <a class="waves-effect waves-teal teal darken-2 btn-flat white-text col s2 offset-s2">Follow</a>
-                            <a class="waves-effect waves-teal teal lighten-1 btn-flat col white-text s2 offset-s1">Chat</a>
+                            <div class="col s5">
+                                <a class="waves-effect waves-teal teal darken-2 btn-flat white-text">Follow</a>
+                            </div>
+                            <div class="col s5">
+                                <a class="waves-effect waves-teal teal lighten-1 btn-flat col white-text">Chat</a>
+                            </div>
                         </div>
                     </div>
-                    <!--
+
                     <div class="col s4" id="featured">
                         <h5>Featured Books</h5>
-                        <table>
-                            <tr>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                                <td>
-                                    <a class="waves-effect waves-light modal-trigger"  href="#modal"   target="_self"><img src = "Images/books.jpeg"  class = "responsive-img"/></a>
-                                </td>
-                            </tr>
-                        </table>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-    </div>
-    <div ng-repeat="book in books">
-        <div ng-attr-id="{{ 'modal-' + book.ubid }}" class="modal modal-fixed-footer grey lighten-3">
-            <div class="row">
-                <div class="modal-content">
-                    <div class="col s6 black">
-                        <img class="responsive-img" ng-src="{{book.image}}">
+                        <div ng-show="featured == 0">
+                            <div ng-if="isMe">
+                                <span class="flow-text">You have no featured books, go select some from your books</span>
+                            </div>
+                            <div ng-if="!isMe">
+                                <span class="flow-text">This person has no featured books</span>
+                            </div>
+                        </div>
+                        <div ng-show="featured > 0 && featured <= 3">
+                            <div class="row">
+                                <div ng-repeat="featuredbook in featuredbooks">
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light modal-trigger" href="" ng-click="openModal(featuredbook, true)"><img width = 40% height = 10% ng-src = "{{featuredbook.image}}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div ng-show="featured > 3">
+                            <div class="row">
+                                <div ng-repeat="featuredbook in firsthalffeaturedbooks">
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light modal-trigger" href="" ng-click="openModal(featuredbook, true)"><img width = 40% height = 10% ng-src = "{{featuredbook.image}}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div ng-repeat="featuredbook in lasthalffeaturedbooks">
+                                    <div class="col s4">
+                                        <a class="waves-effect waves-light modal-trigger" href="" ng-click="openModal(featuredbook, true)"><img width = 40% height = 10% ng-src = "{{featuredbook.image}}"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col s6 grey lighten-4">
-                        <h4>{{book.bookname}} By {{book.author}}</h4>
-                        <h5>{{book.genre}}</h5>
-                        <div class="divider"></div>
-                        <p>{{book.description}}</p>
-                    </div>
-
                 </div>
-            </div>
-            <div class="modal-footer grey lighten-3">
-                <a ng-click="borrow(book)" id="borrowBtn" class="modal-action modal-close waves-effect waves-green btn-flat teal s2 white-text">Borrow</a>
             </div>
         </div>
     </div>
     <div class="row">
-
         <div class="col s6 offset-s1" id="all">
             <div class="card-panel grey lighten-4 z-depth-0">
-                <ul class="collection">
-                    <div ng-repeat="book in books">
-                        <li class="collection-item avatar">
-                            <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
-                            <span class="title"><a data-target="modal{{book.ubid}}">{{book.bookname}}</a></span>
-                            <p>By <a href="">{{book.author}}</a>
-                            </p>
-                            <p class="truncate"><a data-target="modal{{book.ubid}}">{{book.description}}</a></p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                        </li>
+                <div ng-show="books.length == 0">
+                    <div ng-if="isMe">
+                        <h5>You have no books</h5>
                     </div>
-                </ul>
+                    <div ng-if="!isMe">
+                        <h5>This person has no books</h5>
+                    </div>
+                </div>
+                <div ng-show="books.length > 0">
+                    <ul class="collection">
+                        <div ng-repeat="book in books">
+                            <li class="collection-item avatar">
+                                <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
+                                <span class="title"><a href = "" class = "modal-trigger" ng-click = "openModal(book, false)">{{book.bookname}}</a></span>
+                                <p>By <a href="" ng-click="openAuthor(book.author)">{{book.author}}</a>
+                                </p>
+                                <div ng-show="featured < 6">
+                                    <div ng-if="isMe">
+                                        <a href="" class="btn waves-effect" ng-click="addFeaturedBooks(book)">Add to featured</a>
+                                    </div>
+                                </div>
+                                <p class="truncate"><a href="" class="modal-trigger" ng-click="openModal(book, false)">{{book.description}}</a></p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="col s3 offset-s1" id="sidebar">
-            <div class="card-panel grey lighten-4  z-depth-0">
+            <div class="card-panel grey lighten-4 z-depth-0">
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s6"><a class="active" href="#followers">Followers</a></li>
-                            <li class="tab col s6"><a href="#following">Following</a></li>
+                            <li class="tab"><a class="active" href="#followers">Followers</a></li>
+                            <li class="tab"><a href="#following">Following</a></li>
                         </ul>
                     </div>
                     <div id="followers" class="col s12">
                         <div class="collection">
-                            <div ng-repeat="follower in followers"> <a href="#!" class="collection-item">{{follower.name}}</a></div>
-                           
+                            <div ng-repeat="follower in followers"> <a href="" ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
                         </div>
                     </div>
                     <div id="following" class="col s12">
                         <div class="collection">
-                           <div ng-repeat="follower in following"> <a href="#!" class="collection-item">{{follower.name}}</a></div>
+                            <div ng-repeat="follower in following"> <a href="" ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s6"><a href="#test3">Author They Read</a></li>
-                            <li class="tab col s6"><a href="#test4">Genre They Read</a></li>
+                            <li class="tab col s6"><a href="#authors">Authors Read</a></li>
+                            <li class="tab col s6"><a href="#genres">Genres Read</a></li>
                         </ul>
                     </div>
-                    <div id="test3" class="col s12">
+                    <div id="authors" class="col s12">
                         <div class="collection">
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
                         </div>
                     </div>
-                    <div id="test4" class="col s12">
+                    <div id="genres" class="col s12">
                         <div class="collection">
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
                         </div>
                     </div>
                 </div>
 
+            </div>
+        </div>
+    </div>
+    <div id="modal" class="modal modal-fixed-footer grey lighten-3">
+        <div class="row">
+            <div class="modal-content">
+                <div class="col s6 black">
+                    <img class="responsive-img" ng-src="{{modalbook.image}}">
+                </div>
+                <div class="col s6 grey lighten-4">
+                    <h4>{{modalbook.bookname}} By {{modalbook.author}}</h4>
+                    <h5>{{modalbook.genre}}</h5>
+                    <div class="divider"></div>
+                    <p>{{modalbook.description}}</p>
+                </div>
+
+            </div>
+        </div>
+        <div class="modal-footer grey lighten-3">
+            <div ng-show="modalfeatured">
+                <a ng-click="removeFeaturedBooks(modalbook)" class="modal-action modal-close waves-effect waves-green btn-flat teal s2 white-text">Remove from featured books</a>
+            </div>
+            <div ng-show="!modalfeatured">
+                <a ng-click="borrow(modalbook)" id="borrowBtn" class="modal-action modal-close waves-effect waves-green btn-flat teal s2 white-text">Borrow</a>
             </div>
         </div>
     </div>
 </div>
 <script type="text/javascript">
     $(document).ready(function() {
-        // the "href" attribute of the modal trigger must specify the modal ID that wants to be triggered
-        $('.modal').modal();
-    });
-    $(document).ready(function() {
         $('.materialboxed').materialbox();
     });
-      $(document).ready(function(){
-    $('ul.tabs').tabs();
-  });
+    $(document).ready(function() {
+        $('ul.tabs').tabs();
+    });
 </script>
-    

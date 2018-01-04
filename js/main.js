@@ -1,15 +1,7 @@
 var app = angular.module("quickbooks", ["ngRoute", 'ui.materialize']); // Defining The Applications Quickbooks
 
-var scripts = ['/js/Service/addBookService.js', '/js/Service/newBooksService.js', '/js/Service/searchService.js', '/js/Service/showPagesService.js'];
-
-for (var src of scripts) {
-    var imported = document.createElement('script');
-    imported.src = src;
-    document.head.appendChild(imported);
-}
 // Route
 app.config(function($routeProvider) { // Making the Router Provider
-
     $routeProvider
         .when("/login", { // Url Login
             templateUrl: "login.html", // Template Url  
@@ -19,7 +11,7 @@ app.config(function($routeProvider) { // Making the Router Provider
             templateUrl: "homepage.html",
             controller: "homeController"
         })
-        .when("/username/:userId", {
+        .when("/username/:userId/:username", {
             templateUrl: "user.html",
             controller: "userController"
         })
@@ -27,39 +19,94 @@ app.config(function($routeProvider) { // Making the Router Provider
             templateUrl: "addbook.html",
             controller: "addBookController"
         })
-        .when("/authorbook/:authorId", {
+        .when("/authors/:authorId", {
             templateUrl: "authors.html",
             controller: "showAuthorController"
         })
-        .when("/genres", {
+        .when("/genres/:genreName", {
             templateUrl: "genres.html",
             controller: "showGenreController"
+        })
+        .when("/books/:bookName", {
+            templateUrl: "books.html",
+            controller: "showBookController"
         });
 });
 // Controllers
 //Controller for the author page i.e showAuthorService
-
-app.controller('showAuthorController', function($scope, $routeParams, showAuthorService) {
-    this.initialize = function(){
-        $scope.page = false;
-        $scope.loading = true;
+app.controller('showAuthorController', function($scope, $location, $routeParams, showAuthorService) {
+    this.initialize = function() {
+        $scope.authorpage = false;
+        $scope.authorloading = true;
     }
     var authorId = $routeParams.authorId;
-    console.log("Author ID :" + authorId);
     showAuthorService.getResponses(authorId).then(function(authorbooks) {
         $scope.authorName = authorbooks[0].author.Name;
         $scope.authorbooks = authorbooks;
-    }).finally(function(){
-       $scope.loading = false;
-       $scope.page = true;
+    }).finally(function() {
+        $scope.authorloading = false;
+        $scope.authorpage = true;
     });
 
-});
-//Controller for the genre page i.e showGenreService
-app.controller('showGenreController', function($scope, showGenreService) {
-    $scope.getgenres = function(string) {
+    $scope.openGenre = function(genrename) {
+        $location.path("/genres/" + genrename);
+    }
 
-    };
+});
+
+app.controller('showBookController', function($scope, $location, $routeParams, addBookService) {
+    this.initialize = function() {
+        $scope.bookpage = false;
+        $scope.bookloading = true;
+    }
+    var bookname = $routeParams.bookName;
+    console.log(bookname);
+    var data = {
+        name: bookname
+    }
+    addBookService.getBookDetails(data)
+        .then(function(bookdetails) {
+            console.log(bookdetails);
+            $scope.bookname = bookname;
+            $scope.authorname = bookdetails[0].authorname;
+            $scope.genrename = bookdetails[0].genrename;
+            $scope.year = bookdetails[0].year;
+            $scope.owners = bookdetails[0].owners;
+            // $scope.authorbooks = authorbooks;
+        }).finally(function() {
+            $scope.bookloading = false;
+            $scope.bookpage = true;
+        });
+
+
+    $scope.openAuthor = function(authorname) {
+        $location.path("/authors/" + authorname);
+    }
+
+    $scope.openGenre = function(genrename) {
+        $location.path("/genres/" + genrename);
+    }
+});
+
+//Controller for the genre page i.e showGenreService
+app.controller('showGenreController', function($scope, $location, $routeParams, showGenreService) {
+    this.initialize = function() {
+        $scope.genrepage = false;
+        $scope.genreloading = true;
+    }
+    var genreName = $routeParams.genreName;
+    showGenreService.getResponses(genreName)
+        .then(function(genrebooks) {
+            $scope.genreName = $routeParams.genreName;
+            $scope.genrebooks = genrebooks;
+        }).finally(function() {
+            $scope.genreloading = false;
+            $scope.genrepage = true;
+        });
+
+    $scope.openAuthor = function(authorname) {
+        $location.path("/authors/" + authorname);
+    }
 });
 app.controller('baseController', function($scope, userService) {
 
@@ -85,13 +132,12 @@ app.controller('loginController', function($scope, $location, $timeout, userServ
             });
     };
     this.initialize(); // Function called to Intitialize
-    //console.log('test');
 });
 // Beyond this Point Any Doubt Please Ping Me Immediately, I will reply as soon as possible or comment that line
 app.controller('addBookController', function($scope, userService, addBookService) {
     var data = {}; //what does this do?
     var isNew = false;
-    angular.element(document).ready(function() { //what is this?
+    angular.element(document).ready(function() {
         $('select').material_select();
         $('.datepicker').pickadate({
             selectMonths: true, // Creates a dropdown to control month
@@ -151,7 +197,6 @@ app.controller('addBookController', function($scope, userService, addBookService
             $scope.loadingGenre = true;
             addBookService.getGenre(searchGenre)
                 .then(function(response) {
-                    console.log(response);
                     $scope.genres = response.data;
                     $scope.listGenre = true;
                 })
@@ -168,27 +213,23 @@ app.controller('addBookController', function($scope, userService, addBookService
         data.name = document.getElementById("book").value;
         console.log("New book");
         isNew = true;
-        console.log("Book name:" + data.name);
         document.getElementById("book").disabled = true;
         $scope.book = false;
         $scope.newBook = true;
     }
     $scope.newAuthorClick = function() {
         data.author = document.getElementById("author").value;
-        console.log("Author name:" + data.author);
         document.getElementById("author").disabled = true;
         $scope.author = false;
     }
     $scope.newGenreClick = function() {
         data.genre = document.getElementById("genre").value
-        console.log("Genre name:" + data.genre);
         document.getElementById("genre").disabled = true;
         $scope.genre = false;
     }
     $scope.addBook = function() {
         console.log("In Function");
         if (isNew === false) {
-            console.log("Ubid");
             var ubid = $("input[name=books]:checked").val();
             var data = {
                 ubid: ubid,
@@ -197,7 +238,6 @@ app.controller('addBookController', function($scope, userService, addBookService
             addBookService.addBook(data);
         }
         else {
-            console.log("new Book")
             data.year = document.getElementById("year").value;
             if (!($("input[name=authors]:checked").val() == 'undefined')) {
                 var uaid = $("input[name=authors]:checked").val();
@@ -207,29 +247,35 @@ app.controller('addBookController', function($scope, userService, addBookService
                 var ugid = $("input[name=genres]:checked").val();
                 data.ugid = ugid;
             }
-            console.log(data);
             addBookService.addBook(data);
         }
     }
 });
-app.controller('homeController', function($scope, $location, newBooksService, borrowService, userService, searchService) {
+app.controller('homeController', function($scope, $location, newBooksService, borrowService, userService, searchService, requestsService, borrowedBooksService) {
     $scope.homepage = false;
+    $scope.openUser = function(user) {
+        $location.path("/username/" + user.uuid + "/" + user.name);
+    }
     $scope.addBook = function() {
         $location.path("/add");
     }
-    $scope.myFunct = function(keyEvent) {
-        if (keyEvent.which === 13) {
-            searchService.finalSearch($scope.search)
-                .then(function(response) {
-                    $scope.searchPage = true;
-                    $scope.showBooks = false;
-                    $scope.view = "search";
-                    var books = searchService.getResponses();
-                    //console.log(books);
-                    $scope.books = books;
-                });
-        }
+
+    $scope.openAuthor = function(authorname) {
+        $location.path("/authors/" + authorname);
     }
+
+    $scope.openGenre = function(genrename) {
+        $location.path("/genres/" + genrename);
+    }
+
+    $scope.openBook = function(book) {
+        $location.path("/books/" + book.bookname);
+    }
+
+    $scope.openUser = function(username) {
+        $location.path("/username/" + userService.getUuid() + "/" + userService.getUsername());
+    }
+
     $scope.initialize = function() { // Function Defined here
         var token = userService.getToken();
         $scope.loading = true;
@@ -241,12 +287,32 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
                     $scope.view = "books";
                     $scope.books = responses;
                     $scope.page = true;
-                }).catch(function(err) {
-                    Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
-                })
-                .finally(function() {
-                    // called no matter success or failure
                     $scope.loading = false;
+                    $(document).ready(function() {
+                        $('.tooltipped').tooltip({ delay: 50 });
+                        $('.dropdown-button').dropdown({
+                            inDuration: 300,
+                            outDuration: 225,
+                            constrainWidth: false, // Does not change width of dropdown to that of the activator
+                            hover: false, // Activate on hover
+                            gutter: 10, // Spacing from edge
+                            belowOrigin: true, // Displays dropdown below the button
+                            alignment: 'left', // Displays dropdown with edge aligned to the left of button
+                            stopPropagation: false // Stops event propagation
+                        });
+                        $('.modal').modal({
+                            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                            opacity: 1, // Opacity of modal background
+                            inDuration: 300, // Transition in duration
+                            outDuration: 200, // Transition out duration
+                            startingTop: '4%', // Starting top style attribute
+                            endingTop: '10%', // Ending top style attribute
+                            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                                console.log(modal, trigger);
+                            },
+                            complete: function() {} // Callback for Modal close
+                        });
+                    });
                 });
         }
         else {
@@ -254,6 +320,179 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
         }
 
     };
+
+    $scope.myFunct = function(keyEvent) {
+        if (keyEvent.which === 13) {
+            searchService.finalSearch($scope.search)
+                .then(function(response) {
+                    $scope.searchPage = true;
+                    $scope.showBooks = false;
+                    $scope.view = "search";
+                    var books = searchService.getResponses();
+                    $scope.books = books;
+                });
+        }
+    }
+
+    $scope.openMineModal = function() {
+        $('#modal1').modal('open');
+    }
+    $scope.openOtherModal = function() {
+        $('#modal2').modal('open');
+    }
+    $scope.openBorrowedModal = function() {
+        $('#modal3').modal('open');
+    }
+    $scope.openLentModal = function() {
+        $('#modal4').modal('open');
+    }
+
+
+    $scope.getUserRequests = function() {
+        requestsService.getRequests()
+            .then(function(requests) {
+                $scope.requests = requests;
+                for (let request of requests) {
+                    $scope.expelreplyid(request.URID);
+                }
+                if (requests.length == 0) {
+                    Materialize.toast('<p class="flow-text green-text">You have no book <br> requests!!</p>', 2000);
+                }
+            })
+            .catch(function(err) {
+                Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
+            });
+    }
+
+    $scope.getSentRequests = function() {
+        requestsService.getSentRequests()
+            .then(function(sentrequests) {
+                $scope.sentrequests = sentrequests;
+                if (sentrequests.length == 0) {
+                    Materialize.toast('<p class="flow-text green-text">You have not sent any book <br> requests!!</p>', 2000);
+                }
+            })
+            .catch(function(err) {
+                Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
+            });
+    }
+
+    var replyarr = [];
+    $scope.ReplyUserRequests = function(response, relatedRequest) {
+        var data = {
+            response: response,
+            request: relatedRequest
+        }
+        requestsService.addResponse(data)
+            .then(function(response) {
+                Materialize.toast('<p class="flow-text white-text">' + response + '</p>', 2000);
+                replyarr.push(relatedRequest.URID);
+            })
+            .catch(function(error) {
+                Materialize.toast('<p class="flow-text red-text">Sorry, your request to reply failed' + error.data.message + '</p>', 2000);
+            });
+    }
+
+    $scope.replysuccess = function(id) {
+        if (replyarr.indexOf(id) != -1)
+            return true;
+        else
+            return false;
+    }
+
+    $scope.expelreplyid = function(id) {
+        if (replyarr.indexOf(id) != -1)
+            replyarr.splice(replyarr.indexOf(id));
+    }
+
+    $scope.getBorrowedBooks = function() {
+        borrowedBooksService.getBorrowedBooks()
+            .then(function(borrowedbooks) {
+                $scope.borrowedbooks = borrowedbooks;
+                for (let borrowedbook of borrowedbooks) {
+                    $scope.expelreturnid(borrowedbook.UBOID);
+                }
+                if (borrowedbooks.length == 0) {
+                    Materialize.toast('<p class="flow-text green-text">You have no borrowed books</p>', 2000);
+                }
+            })
+            .catch(function(err) {
+                Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
+            });
+    }
+
+    var returnarr = [];
+    $scope.returnBorrowedBook = function(book) { //relreq = related requests
+        var data = {
+            borrowedBook: book
+        }
+        borrowedBooksService.returnBorrowedBook(data)
+            .then(function(response) {
+                Materialize.toast('<p class="flow-text white-text">' + response + '</p>', 2000);
+                returnarr.push(book.UBOID);
+            })
+            .catch(function(error) {
+                Materialize.toast('<p class="flow-text red-text">' + error.data.message + '</p>', 2000);
+            });
+    }
+
+    $scope.returnreqsuccess = function(id) {
+        if (returnarr.indexOf(id) != -1)
+            return true;
+        else
+            return false;
+    }
+
+    $scope.expelreturnid = function(id) {
+        if (returnarr.indexOf(id) != -1)
+            returnarr.splice(returnarr.indexOf(id));
+    }
+
+
+    $scope.getLentBooksStatus = function() {
+        borrowedBooksService.getLentBooksStatus()
+            .then(function(lentbooks) {
+                $scope.lentbooks = lentbooks;
+                for (let lentbook of lentbooks) {
+                    $scope.expeltakebackid(lentbook.UBOID);
+                }
+                if (lentbooks.length == 0) {
+                    Materialize.toast('<p class="flow-text green-text">You haven\'t lent any books</p>', 2000);
+                }
+            })
+            .catch(function(err) {
+                Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
+            });
+    }
+
+    var takebackarr = [];
+    $scope.takeBackBook = function(book) {
+        var data = {
+            lentbook: book
+        }
+        borrowedBooksService.takeBackBorrowedBook(data)
+            .then(function(response) {
+                Materialize.toast('<p class="flow-text white-text">' + response + '</p>', 2000);
+                takebackarr.push(book.UBOID);
+            })
+            .catch(function(error) {
+                Materialize.toast('<p class="flow-text red-text">' + error.data.message + '</p>', 2000);
+            });
+    }
+
+    $scope.takebacksuccess = function(id) {
+        if (takebackarr.indexOf(id) != -1)
+            return true;
+        else
+            return false;
+    }
+
+    $scope.expeltakebackid = function(id) {
+        if (takebackarr.indexOf(id) != -1)
+            takebackarr.splice(takebackarr.indexOf(id));
+    }
+
+
     $scope.borrow = function(book) {
         borrowService.borrow(book.uuid, book.ubid)
             .then(function(response) {
@@ -267,27 +506,119 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
     //Here
     $scope.initialize();
 });
-app.controller('userController', function($scope, $routeParams, userService) {
+app.controller('userController', function($scope, $location, $routeParams, userService, featuredBooksService, profileService) {
     $scope.userPage = false;
-    $scope.loading = true;
-    $scope.initialize = function() {
-        $scope.name = userService.getUsername();
-        $scope.books = userService.getBooks();
-        $scope.following = userService.getFollowing();
-        $scope.followers = userService.getFollowers();
+    $scope.userloading = true;
+    var userID = -1;
+    
+    $scope.getFeaturedBooks = function() {
+        featuredBooksService.getBooks(userID) // NAME
+            .then(function(featuredbooks) {
+                if (featuredbooks.length == 0) {
+                    $scope.featured = 0;
+                }
+                else {
+                    $scope.featured = featuredbooks.length;
+                }
+                if (featuredbooks.length > 3) {
+                    var temparr = [];
+                    var temparr2 = [];
+                    for (let iter = 0; iter < featuredbooks.length; iter++) {
+                        if (iter < 3) {
+                            temparr.push(featuredbooks[iter]);
+                        }
+                        else if (iter < featuredbooks.length) {
+                            temparr2.push(featuredbooks[iter]);
+                        }
+                    }
+                    $scope.firsthalffeaturedbooks = temparr;
+                    $scope.lasthalffeaturedbooks = temparr2;
+                }
+                else {
+                    $scope.featuredbooks = featuredbooks;
+                }
+            })
+            .catch(function(err) {
+                Materialize.toast('<p class="flow-text red-text">' + err.data.message + '</p>', 2000);
+            })
+            .finally(function() {
 
+            });
     }
+
+    $scope.addFeaturedBooks = function(book) {
+        var data = {
+            featuredbook: book
+        }
+        featuredBooksService.addFeaturedBooks(data)
+            .then(function(response) {
+                Materialize.toast('<p class="flow-text white-text">' + response + '</p>', 2000);
+                $scope.getFeaturedBooks();
+            })
+            .catch(function(error) {
+                Materialize.toast('<p class="flow-text red-text">' + error.data.message + '</p>', 2000);
+            });
+    }
+    $scope.removeFeaturedBooks = function(book) {
+        var data = {
+            featuredbook: book
+        }
+        featuredBooksService.removeFeaturedBooks(data)
+            .then(function(response) {
+                Materialize.toast('<p class="flow-text white-text">' + response + '</p>', 2000);
+                $scope.getFeaturedBooks();
+            })
+            .catch(function(error) {
+                Materialize.toast('<p class="flow-text red-text">' + error.data.message + '</p>', 2000);
+            });
+    }
+    $scope.initialize = function() {
+        //Page
+        let user = $routeParams.userId;
+        if (user == userService.getUuid()) {
+            $scope.name = userService.getUsername();
+            $scope.books = userService.getBooks();
+            $scope.following = userService.getFollowing();
+            $scope.followers = userService.getFollowers();
+            $scope.isMe = true;
+        }
+        else {
+            $scope.isMe = false;
+            userID = user;
+            profileService.getDetails(userID, userService.getToken())
+                .then(function(details) {
+                    $scope.name = details.response.name;
+                    $scope.books = details.response.books;
+                    $scope.following = details.response.following;
+                    $scope.followers = details.response.followers;
+                });
+        }
+        $scope.getFeaturedBooks();
+    }
+
     if (!(userService.getBooks())) {
         userService.getDetails()
             .then(function(data) {
                 $scope.initialize();
             })
             .finally(function(data) {
-                $scope.loading = false;
+                $scope.userloading = false;
                 $scope.userPage = true;
                 angular.element(document).ready(function() { //what is this?
                     $(document).ready(function() {
                         $('ul.tabs').tabs();
+                        $('.modal').modal({
+                            dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                            opacity: 1, // Opacity of modal background
+                            inDuration: 300, // Transition in duration
+                            outDuration: 200, // Transition out duration
+                            startingTop: '4%', // Starting top style attribute
+                            endingTop: '10%', // Ending top style attribute
+                            ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                                console.log(modal, trigger);
+                            },
+                            complete: function() {} // Callback for Modal close
+                        });
                     });
 
                 });
@@ -295,13 +626,43 @@ app.controller('userController', function($scope, $routeParams, userService) {
     }
     else {
         $scope.initialize();
-        $scope.loading = false;
+        $scope.userloading = false;
         $scope.userPage = true;
+        $scope.getFeaturedBooks();
         angular.element(document).ready(function() { //what is this?
             $(document).ready(function() {
                 $('ul.tabs').tabs();
+                $('.modal').modal({
+                    dismissible: true, // Modal can be dismissed by clicking outside of the modal
+                    opacity: 1, // Opacity of modal background
+                    inDuration: 300, // Transition in duration
+                    outDuration: 200, // Transition out duration
+                    startingTop: '4%', // Starting top style attribute
+                    endingTop: '10%', // Ending top style attribute
+                    ready: function(modal, trigger) { // Callback for Modal open. Modal and trigger parameters available.
+                        console.log(modal, trigger);
+                    },
+                    complete: function() {} // Callback for Modal close
+                });
             });
-
         });
     }
-})
+
+    $scope.openModal = function(book, isFeatured) {
+        $scope.modalfeatured = isFeatured;
+        $scope.modalbook = book;
+        $('#modal').modal('open');
+    };
+
+    $scope.openGenre = function(genrename) {
+        $location.path("/genres/" + genrename);
+    };
+
+
+    $scope.openAuthor = function(authorname) {
+        $location.path("/authors/" + authorname);
+    };
+    $scope.openUser = function(user) {
+        $location.path("/username/" + user.uuid + "/" + user.name);
+    };
+});

@@ -9,13 +9,48 @@
         </div>
     </div>
 </nav>
-<div class="row">
-    <div class="col s6 m6">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-              <span class="card-title white">{{book.author}}</span>
-              <p>The books will have to come here, I guess.</p>            
+<div class="spinner" ng-show="genreloading">
+    <link rel="stylesheet" type="text/css" href="css/loading.css" />
+    <div id="loader" bgcolor="#212121">
+        <img id="dot" class="dots_r" src="Images/loading/dot.svg" />
+        <img id="dot1" class="dots_r" src="Images/loading/dot1.svg" />
+        <img id="dot2" class="dots_r" src="Images/loading/dot2.svg" />
+        <img id="dot3" class="dots_r" src="Images/loading/dot3.svg" />
+        <img id="dot4" class="dots_r" src="Images/loading/dot4.svg" />
+        <img id="dot5" class="dots_r" src="Images/loading/dot5.svg" />
+        <img id="dot6" class="dots_r" src="Images/loading/dot6.svg" />
+
+        <img id="dot7" class="dots_l" src="Images/loading/dot7.svg" />
+        <img id="dot8" class="dots_l" src="Images/loading/dot8.svg" />
+        <img id="dot9" class="dots_l" src="Images/loading/dot9.svg" />
+        <img id="dot10" class="dots_l" src="Images/loading/dot10.svg" />
+        <img id="dot11" class="dots_l" src="Images/loading/dot11.svg" />
+        <img id="dot12" class="dots_l" src="Images/loading/dot12.svg" />
+        <img id="dot13" class="dots_l" src="Images/loading/dot13.svg" />
+        <img id="book" src="Images/loading/book.png" />
+    </div>
+</div>
+<div class="section grey lighten-2">
+    <div class="container" ng-show="genrepage">
+        <div class="row">
+            <div class="col s12">
+                <div class="card white">
+                    <div class="card-title white flow-text center-align">Genre : {{genreName}}</div>
+                    <div class="card-content white grey-text text-darken-4">
+                        <ul class="collection">
+                            <div ng-repeat="genrebook in genrebooks">
+                                <li class="collection-item avatar">
+                                    <img src = "Images/books.jpeg" alt="Images/books.jpeg" class="circle">
+                                    <span class="title"><a>{{genrebook.bookname}}</a></span>
+                                    <p>Written by : <a href="" ng-click = "openAuthor(genrebook.author)">{{genrebook.author}}</a></p>
+                                    <p>Published on : {{genrebook.year}}</p>
+                                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                                </li>
+                            </div>
+                        </ul>
+                    </div>
+                </div>
             </div>
-      </div>
+        </div>
     </div>
 </div>

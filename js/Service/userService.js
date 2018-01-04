@@ -25,10 +25,12 @@ app.factory('userService', function($http) { // This is Factory, Google What a F
         return $http({ // Returning the function of http to previous function getDetails()
             method: "GET", // Type GET
             url: `https://cisco-backend-cryogenicplanet.c9users.io/userDetails`, // Url
-            headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken() }, // Setting Headers, Function call to get getToken() to send to db
+            headers: { 'Content-Type': 'application/json', 'x-access-token': userService.getToken(),'x-user-id' : -1 }, // Setting Headers, Function call to get getToken() to send to db
         }).then(function(responses) { // Promise sucessful
             username = responses.data.response.name; //Username
-            localStorage.setItem("username", username); // Local Storage
+            let uuid = responses.data.response.uuid; // UUID
+            localStorage.setItem("uuid",uuid);
+            localStorage.setItem("username", username);
             var usersBooks = JSON.stringify(responses.data.response.books); // Making it JSON
             var followers = JSON.stringify(responses.data.response.followers); // Making it JSON
             var following = JSON.stringify(responses.data.response.following); // Making it JSON
@@ -42,7 +44,8 @@ app.factory('userService', function($http) { // This is Factory, Google What a F
     userService.getBooks = () => { return JSON.parse(sessionStorage.getItem("books")); }; // Function returns all the books of your users
     userService.getFollowers = () => { return JSON.parse(sessionStorage.getItem("followers")); }; // Function returns all followers of the users
     userService.getFollowing = () => { return JSON.parse(sessionStorage.getItem("following")); }; // Function returns all following of the users
-    userService.getUsername = () => { return localStorage.getItem("username"); }; // Function returns of the username of the user
+    userService.getUsername = () => { return localStorage.getItem("username"); };
+    userService.getUuid = () => { return localStorage.getItem("uuid"); };
     userService.getToken = () => { return localStorage.getItem("token"); }; // Function returns of token of the user
     return userService;
 });
