@@ -5,7 +5,7 @@
         </a>
     </div>
 </nav>
-<div class="spinner" ng-show="loading">
+<div class="spinner" ng-show="userloading">
     <link rel="stylesheet" type="text/css" href="css/loading.css" />
     <div id="loader" bgcolor="#212121">
         <img id="dot" class="dots_r" src="Images/loading/dot.svg" />
@@ -54,7 +54,12 @@
                     <div class="col s4" id="featured">
                         <h5>Featured Books</h5>
                         <div ng-show="featured == 0">
-                            <span class="flow-text">You have no featured books, go select some from your books</span>
+                            <div ng-if="isMe">
+                                <span class="flow-text">You have no featured books, go select some from your books</span>
+                            </div>
+                            <div ng-if="!isMe">
+                                <span class="flow-text">This person has no featured books</span>
+                            </div>
                         </div>
                         <div ng-show="featured > 0 && featured <= 3">
                             <div class="row">
@@ -89,23 +94,33 @@
     <div class="row">
         <div class="col s6 offset-s1" id="all">
             <div class="card-panel grey lighten-4 z-depth-0">
-                <ul class="collection">
-                    <div ng-repeat="book in books">
-                        <li class="collection-item avatar">
-                            <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
-                            <span class="title"><a href = "" class = "modal-trigger" ng-click = "openModal(book, false)">{{book.bookname}}</a></span>
-                            <p>By <a href="" ng-click="openAuthor(book.author)">{{book.author}}</a>
-                            </p>
-                            <div ng-show="featured < 6">
-                                <div ng-if = "isMe">
-                                    <a href="" class="btn waves-effect" ng-click="addFeaturedBooks(book)">Add to featured</a>
-                                </div>
-                            </div>
-                            <p class="truncate"><a href="" class="modal-trigger" ng-click="openModal(book, false)">{{book.description}}</a></p>
-                            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                        </li>
+                <div ng-show="books.length == 0">
+                    <div ng-if="isMe">
+                        <h5>You have no books</h5>
                     </div>
-                </ul>
+                    <div ng-if="!isMe">
+                        <h5>This person has no books</h5>
+                    </div>
+                </div>
+                <div ng-show="books.length > 0">
+                    <ul class="collection">
+                        <div ng-repeat="book in books">
+                            <li class="collection-item avatar">
+                                <img ng-src="{{book.image}}" alt="" class="circle materialboxed">
+                                <span class="title"><a href = "" class = "modal-trigger" ng-click = "openModal(book, false)">{{book.bookname}}</a></span>
+                                <p>By <a href="" ng-click="openAuthor(book.author)">{{book.author}}</a>
+                                </p>
+                                <div ng-show="featured < 6">
+                                    <div ng-if="isMe">
+                                        <a href="" class="btn waves-effect" ng-click="addFeaturedBooks(book)">Add to featured</a>
+                                    </div>
+                                </div>
+                                <p class="truncate"><a href="" class="modal-trigger" ng-click="openModal(book, false)">{{book.description}}</a></p>
+                                <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="col s3 offset-s1" id="sidebar">
@@ -119,36 +134,38 @@
                     </div>
                     <div id="followers" class="col s12">
                         <div class="collection">
-                            <div ng-repeat="follower in followers"> <a ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
+                            <div ng-repeat="follower in followers"> <a href="" ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
                         </div>
                     </div>
                     <div id="following" class="col s12">
                         <div class="collection">
-                            <div ng-repeat="follower in following"> <a ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
+                            <div ng-repeat="follower in following"> <a href="" ng-click="openUser(follower)" class="collection-item">{{follower.name}}</a></div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col s12">
                         <ul class="tabs">
-                            <li class="tab col s6"><a href="#authors">Authors They Read</a></li>
-                            <li class="tab col s6"><a href="#genres">Genres They Read</a></li>
+                            <li class="tab col s6"><a href="#authors">Authors Read</a></li>
+                            <li class="tab col s6"><a href="#genres">Genres Read</a></li>
                         </ul>
                     </div>
                     <div id="authors" class="col s12">
                         <div class="collection">
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
-                            <a href="#!" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
+                            <a href="" class="collection-item">Author</a>
                         </div>
                     </div>
                     <div id="genres" class="col s12">
                         <div class="collection">
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
-                            <a href="#!" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
+                            <a href="" class="collection-item">Alvin</a>
                         </div>
                     </div>
                 </div>

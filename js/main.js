@@ -1,12 +1,5 @@
 var app = angular.module("quickbooks", ["ngRoute", 'ui.materialize']); // Defining The Applications Quickbooks
 
-var scripts = ['/js/Service/addBookService.js', '/js/Service/newBooksService.js', '/js/Service/searchService.js', '/js/Service/showPagesService.js', '/js/Service/requests.js', '/js/Service/borrowedBooksService.js', '/js/Service/featuredBooksService.js'];
-
-for (var src of scripts) {
-    var imported = document.createElement('script');
-    imported.src = src;
-    document.head.appendChild(imported);
-}
 // Route
 app.config(function($routeProvider) { // Making the Router Provider
     $routeProvider
@@ -33,22 +26,26 @@ app.config(function($routeProvider) { // Making the Router Provider
         .when("/genres/:genreName", {
             templateUrl: "genres.html",
             controller: "showGenreController"
+        })
+        .when("/books/:bookName", {
+            templateUrl: "books.html",
+            controller: "showBookController"
         });
 });
 // Controllers
 //Controller for the author page i.e showAuthorService
 app.controller('showAuthorController', function($scope, $location, $routeParams, showAuthorService) {
     this.initialize = function() {
-        $scope.page = false;
-        $scope.loading = true;
+        $scope.authorpage = false;
+        $scope.authorloading = true;
     }
     var authorId = $routeParams.authorId;
     showAuthorService.getResponses(authorId).then(function(authorbooks) {
         $scope.authorName = authorbooks[0].author.Name;
         $scope.authorbooks = authorbooks;
     }).finally(function() {
-        $scope.loading = false;
-        $scope.page = true;
+        $scope.authorloading = false;
+        $scope.authorpage = true;
     });
 
     $scope.openGenre = function(genrename) {
@@ -56,11 +53,46 @@ app.controller('showAuthorController', function($scope, $location, $routeParams,
     }
 
 });
+
+app.controller('showBookController', function($scope, $location, $routeParams, addBookService) {
+    this.initialize = function() {
+        $scope.bookpage = false;
+        $scope.bookloading = true;
+    }
+    var bookname = $routeParams.bookName;
+    console.log(bookname);
+    var data = {
+        name: bookname
+    }
+    addBookService.getBookDetails(data)
+        .then(function(bookdetails) {
+            console.log(bookdetails);
+            $scope.bookname = bookname;
+            $scope.authorname = bookdetails[0].authorname;
+            $scope.genrename = bookdetails[0].genrename;
+            $scope.year = bookdetails[0].year;
+            $scope.owners = bookdetails[0].owners;
+            // $scope.authorbooks = authorbooks;
+        }).finally(function() {
+            $scope.bookloading = false;
+            $scope.bookpage = true;
+        });
+
+
+    $scope.openAuthor = function(authorname) {
+        $location.path("/authors/" + authorname);
+    }
+
+    $scope.openGenre = function(genrename) {
+        $location.path("/genres/" + genrename);
+    }
+});
+
 //Controller for the genre page i.e showGenreService
 app.controller('showGenreController', function($scope, $location, $routeParams, showGenreService) {
     this.initialize = function() {
-        $scope.page = false;
-        $scope.loading = true;
+        $scope.genrepage = false;
+        $scope.genreloading = true;
     }
     var genreName = $routeParams.genreName;
     showGenreService.getResponses(genreName)
@@ -68,8 +100,8 @@ app.controller('showGenreController', function($scope, $location, $routeParams, 
             $scope.genreName = $routeParams.genreName;
             $scope.genrebooks = genrebooks;
         }).finally(function() {
-            $scope.loading = false;
-            $scope.page = true;
+            $scope.genreloading = false;
+            $scope.genrepage = true;
         });
 
     $scope.openAuthor = function(authorname) {
@@ -236,6 +268,10 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
         $location.path("/genres/" + genrename);
     }
 
+    $scope.openBook = function(book) {
+        $location.path("/books/" + book.bookname);
+    }
+
     $scope.openUser = function(username) {
         $location.path("/username/" + userService.getUuid() + "/" + userService.getUsername());
     }
@@ -251,6 +287,7 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
                     $scope.view = "books";
                     $scope.books = responses;
                     $scope.page = true;
+                    $scope.loading = false;
                     $(document).ready(function() {
                         $('.tooltipped').tooltip({ delay: 50 });
                         $('.dropdown-button').dropdown({
@@ -471,9 +508,9 @@ app.controller('homeController', function($scope, $location, newBooksService, bo
 });
 app.controller('userController', function($scope, $location, $routeParams, userService, featuredBooksService, profileService) {
     $scope.userPage = false;
-    $scope.loading = true;
+    $scope.userloading = true;
     var userID = -1;
-
+    
     $scope.getFeaturedBooks = function() {
         featuredBooksService.getBooks(userID) // NAME
             .then(function(featuredbooks) {
@@ -565,7 +602,7 @@ app.controller('userController', function($scope, $location, $routeParams, userS
                 $scope.initialize();
             })
             .finally(function(data) {
-                $scope.loading = false;
+                $scope.userloading = false;
                 $scope.userPage = true;
                 angular.element(document).ready(function() { //what is this?
                     $(document).ready(function() {
@@ -589,7 +626,7 @@ app.controller('userController', function($scope, $location, $routeParams, userS
     }
     else {
         $scope.initialize();
-        $scope.loading = false;
+        $scope.userloading = false;
         $scope.userPage = true;
         $scope.getFeaturedBooks();
         angular.element(document).ready(function() { //what is this?
@@ -620,6 +657,7 @@ app.controller('userController', function($scope, $location, $routeParams, userS
     $scope.openGenre = function(genrename) {
         $location.path("/genres/" + genrename);
     };
+
 
     $scope.openAuthor = function(authorname) {
         $location.path("/authors/" + authorname);

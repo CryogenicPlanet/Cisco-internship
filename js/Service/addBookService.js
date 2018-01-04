@@ -1,5 +1,4 @@
-//var app = angular.module("quickbooks");
-
+var app = angular.module("quickbooks");
 app.factory('addBookService', function($http, userService) {
     var addService = [];
 
@@ -25,6 +24,19 @@ app.factory('addBookService', function($http, userService) {
 
             });
         }
+    }
+    
+    addService.getBookDetails = function(data) {
+        return $http({
+            method: "POST",
+            url: `https://cisco-backend-cryogenicplanet.c9users.io/getBookDetails`, //what does ${book} do?
+            data: JSON.stringify(data),
+            cache: true,
+            headers: { 'Content-Type': 'application/json' },
+            // Setting Headers, Function call to get getToken() to send to db
+        }).then(function(responses) {
+            return responses.data.bookdetails;
+        });
     }
     addService.getAuthors = function(author) {
         return $http({

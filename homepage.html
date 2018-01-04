@@ -1,52 +1,51 @@
-<div ngIf="isLoggedIn">
-      <nav>
-        <div class="nav-wrapper grey darken-4">
-          <div class="row">
+<nav>
+    <div class="nav-wrapper grey darken-4">
+        <div class="row">
             <div class="col s1">
-              <a href="#" class="brand-logo">
-                <div>QB</div>
-              </a>
+                <a href="#" class="brand-logo">
+                    <div>QB</div>
+                </a>
             </div>
             <div class="col s6 offset-s1">
-              <nav>
-                <div class="nav-wrapper grey darken-3">
-                  <form>
-                    <div class="input-field">
-                      <input id="search" placeholder="Search..." type="search" ng-keypress="myFunct($event)" ng-model="search" required>
-                      <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                      <i class="material-icons">close</i>
+                <nav>
+                    <div class="nav-wrapper grey darken-3">
+                        <form>
+                            <div class="input-field">
+                                <input id="search" placeholder="Search..." type="search" ng-keypress="myFunct($event)" ng-model="search" required>
+                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                <i class="material-icons">close</i>
+                            </div>
+                        </form>
                     </div>
-                  </form>
-                </div>
-              </nav>
+                </nav>
             </div>
             <div class="col s4">
-              <ul>
-                <li>
-                  <a ng-click="getSentRequests(); openMineModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Requests you have sent"><i class = "material-icons">library_add</i></a>
-                  <!-- My requests -->
-                </li>
-                <li>
-                  <a ng-click="getUserRequests(); openOtherModal();" class="modal-trigger btn-floating waves-effect waves-light btn tooltipped" data-position="down" data-delay="50" data-tooltip="Requests others have sent you"><i class = "material-icons">person_add</i></a>
-                  <!-- other requests -->
-                </li>
-                <li>
-                  <a ng-click="getBorrowedBooks(); openBorrowedModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Status of books you have borrowed"><i class = "material-icons">assignment_return</i></a>
-                  <!-- Status of books borrowed and option to return books -->
-                </li>
-                <li>
-                  <a ng-click="getLentBooksStatus(); openLentModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Status of your books"><i class = "material-icons">library_books</i></a>
-                  <!-- Status of your books -->
-                </li>
-                <li>
-                  <a ng-click="openUser();" class="btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Your profile"><i class = "material-icons">person</i></a>
-                  <!-- My requests -->
-                </li>
-              </ul>
+                <ul>
+                    <li>
+                        <a ng-click="getSentRequests(); openMineModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Requests you have sent"><i class = "material-icons">library_add</i></a>
+                        <!-- My requests -->
+                    </li>
+                    <li>
+                        <a ng-click="getUserRequests(); openOtherModal();" class="modal-trigger btn-floating waves-effect waves-light btn tooltipped" data-position="down" data-delay="50" data-tooltip="Requests others have sent you"><i class = "material-icons">person_add</i></a>
+                        <!-- other requests -->
+                    </li>
+                    <li>
+                        <a ng-click="getBorrowedBooks(); openBorrowedModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Status of books you have borrowed"><i class = "material-icons">assignment_return</i></a>
+                        <!-- Status of books borrowed and option to return books -->
+                    </li>
+                    <li>
+                        <a ng-click="getLentBooksStatus(); openLentModal();" class="modal-trigger btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Status of your books"><i class = "material-icons">library_books</i></a>
+                        <!-- Status of your books -->
+                    </li>
+                    <li>
+                        <a ng-click="openUser();" class="btn-floating waves-effect waves-light btn hoverable tooltipped" data-position="down" data-delay="50" data-tooltip="Your profile"><i class = "material-icons">person</i></a>
+                        <!-- My requests -->
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-      </nav>
+    </div>
+</nav>
 <script type="text/javascript" src="">
     document.getElementsByTagName('body')[0].style = "";
 </script>
@@ -84,10 +83,10 @@
                                     <img class="activator" ng-src="{{book.image}}">
                                 </div>
                                 <div class="card-content">
-                                    <span class="card-title activator grey-text text-darken-4">{{book.bookname}}<i class="material-icons right">more_vert</i></span>
-                                    <p>Author: <a  ng-click = "openAuthor(book.author)">{{book.author}}</a>, {{book.year}}</p>
-                                    <p>Genre: <a  ng-click = "openGenre(book.genre)">{{book.genre}}</a></p>
-                                    <p>Owned By: <a ng-click="openUser(book)">{{book.username}}</a></p>
+                                    <span class="card-title activator grey-text text-darken-4"><a href = "" ng-click = "openBook(book)">{{book.bookname}}</a><i class="material-icons right">more_vert</i></span>
+                                    <p>Author: <a href = "" ng-click="openAuthor(book.author)">{{book.author}}</a>, {{book.year}}</p>
+                                    <p>Genre: <a href = "" ng-click="openGenre(book.genre)">{{book.genre}}</a></p>
+                                    <p>Owned By: <a href = "" ng-click="openUser(book)">{{book.username}}</a></p>
                                     <p>
                                         <!--   <input id="lenderId" type="hidden" ng-model="llenderId" value="{{book.uuid}}"> 
                                 <input id="bookId" type="hidden" ng-model="lbookId" value="{{book.ubid}}"> -->
@@ -115,8 +114,8 @@
                                     <li class="collection-item avatar">
                                         <img src="Images/books.jpeg" alt="" class="circle">
                                         <span class="title"><a href="#">{{book.item.title}}, {{book.item.year}}</a></span>
-                                        <p>Written by :<a href = "" ng-click = "openAuthor(book.item.author)">{{book.item.author}}</a></p>
-                                        <p>Genre : <a href="" ng-click = "openGenre(book.item.genre)">{{book.item.genre}}</a></p>
+                                        <p>Written by :<a href="" ng-click="openAuthor(book.item.author)">{{book.item.author}}</a></p>
+                                        <p>Genre : <a href="" ng-click="openGenre(book.item.genre)">{{book.item.genre}}</a></p>
                                         <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
                                     </li>
                                 </div>
@@ -266,3 +265,4 @@
             </div>
         </div>
     </div>
+ 
